@@ -1,4 +1,4 @@
-package com.breakabletoyii.flightchecker;
+package com.javier.flightchecker;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
