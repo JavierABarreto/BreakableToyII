@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import { SelectComponent } from "./SearchComponents/SelectComponent"
-import moment from 'moment'
+import dayjs from "dayjs"
 
 const temp = [
   "SFA",
@@ -8,7 +8,7 @@ const temp = [
   "SFA"
 ]
 
-const date = moment().format("YYYY-MM-DD")
+const date = dayjs().format("YYYY-MM-DD")
 
 export const Search = () => {
   return (
