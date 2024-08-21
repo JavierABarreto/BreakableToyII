@@ -1,8 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
-import flightSliceReducer from './flightsSlice.tsx'
+import flightSliceReducer from './slices/flightsSlice.tsx'
+import searchSliceReducer from './slices/searchSlice.tsx'
 
 export default configureStore({
   reducer: {
-    flightSliceReducer: flightSliceReducer
+    flightSliceReducer: flightSliceReducer,
+    searchSliceReducer: searchSliceReducer
   }
 })
