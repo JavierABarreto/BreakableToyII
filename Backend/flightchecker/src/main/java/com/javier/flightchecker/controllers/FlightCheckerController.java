@@ -1,39 +1,38 @@
 package com.javier.flightchecker.controllers;
 
-import com.javier.flightchecker.functions.FlightCheckerService;
-import com.javier.flightchecker.repository.AccessTokenRepository;
+import com.javier.flightchecker.functions.FlightCheckerFunctions;
+import com.javier.flightchecker.models.Filters;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Date;
 
 @RestController
 public class FlightCheckerController {
-    private final FlightCheckerService api = new FlightCheckerService();
-    private final AccessTokenRepository token = new AccessTokenRepository();
+    private final FlightCheckerFunctions flightChecker = new FlightCheckerFunctions();
 
     @GetMapping("/flights")
-    public String index(){
-        try {
-            if(token.isExpired()) {
-                token.setToken(api.getAccessToken());
-                token.setTokenExpTime((new Date().getTime()/1000) + 1799);
+    public Object getFlights(
+        @RequestParam(required = false, defaultValue = "") String departureAirportCode,
+        @RequestParam(required = false, defaultValue = "") String arrivalAirportCode,
+        @RequestParam(required = false, defaultValue = "") String departureDate,
+        @RequestParam(required = false, defaultValue = "") String returnDate,
+        @RequestParam(required = false, defaultValue = "1") Integer numberAdults,
+        @RequestParam(required = false, defaultValue = "") String currency,
+        @RequestParam(required = false, defaultValue = "false") Boolean nonStops,
+        @RequestParam(required = false, defaultValue = "20") Integer max
+    ){
+        Filters filters = new Filters(departureAirportCode, arrivalAirportCode, departureDate, returnDate, numberAdults, currency, nonStops, max);
 
-                return "Getting new token";
-            } else {
-                return "Continuing....";
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return flightChecker.getFlights(filters);
     }
 
-    @GetMapping("/flights/search")
-    public String getFlights() {
-        try {
-            return "asd";
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    @GetMapping("/airlineData")
+    public Object getAirlineInfo(@RequestParam(required = false, defaultValue = "") String IATACode) {
+        return flightChecker.getAirlineData(IATACode);
+    }
+
+    @GetMapping("/IATACodes")
+    public Object getIATACodes(@RequestParam(required = false, defaultValue = "") String name) {
+        return flightChecker.IATACodes(name);
     }
 }
