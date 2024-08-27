@@ -1,7 +1,7 @@
 package com.javier.flightchecker.services;
 
+import com.javier.flightchecker.exceptions.FlightCheckerError;
 import com.javier.flightchecker.models.Filters;
-import com.javier.flightchecker.models.iata.IATAObject;
 import org.apache.tomcat.util.json.JSONParser;
 
 import java.net.URI;
@@ -40,7 +40,7 @@ public class FlightCheckerService {
                 return data;
             }
 
-            return data;
+            throw new FlightCheckerError(response.toString());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -87,7 +87,7 @@ public class FlightCheckerService {
                 return data;
             }
 
-            return data;
+            throw new FlightCheckerError(response.toString());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -124,7 +124,7 @@ public class FlightCheckerService {
                 return data;
             }
 
-            return data;
+            throw new FlightCheckerError(response.toString());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

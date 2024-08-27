@@ -1,5 +1,6 @@
 package com.javier.flightchecker.services;
 
+import com.javier.flightchecker.exceptions.AccessTokenError;
 import org.apache.tomcat.util.json.JSONParser;
 
 import java.net.URI;
@@ -32,7 +33,7 @@ public class AccessTokenService {
                 return accessToken;
             }
 
-            return null;
+            throw new AccessTokenError(response.toString());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
