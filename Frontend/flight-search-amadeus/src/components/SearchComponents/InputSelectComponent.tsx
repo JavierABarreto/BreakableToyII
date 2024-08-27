@@ -1,9 +1,16 @@
+import { useState } from "react";
+
 interface props {
   label: String;
 }
 
 export const InputSelectComponent = ({ label }: props) => {
   const labelTag = label == "Departure Airport" ? "dLabelAirport" : "rLabelAirport";
+  const [btnText, setBtnText] = useState("↓")
+
+  const changeBtnText = () => {
+    btnText == "↓" ? setBtnText("↑") : setBtnText("↓")
+  }
 
   return (
     <div className="row input-group mb-3">
@@ -24,9 +31,7 @@ export const InputSelectComponent = ({ label }: props) => {
           </div>
 
           <div className="col-3 ps-0">
-            <select className="form-select">
-              <option value={"default"} selected disabled>----</option>
-            </select>
+            <button className="btn btn-outline-secondary" onClick={() => changeBtnText()}>{btnText}</button>
           </div>
         </div>
       </div>
