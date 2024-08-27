@@ -1,10 +1,19 @@
 import { useNavigate } from "react-router-dom"
+import useDetail from "../../Hooks/useDetail";
 
 export const FlightCard = () => {
   const navigate = useNavigate()
 
+  const data = { name: "1" };
+  const { setFlight }: any = useDetail();
+
+  const temp = () => {
+    setFlight(data)
+    navigate("/flights/Details")
+  }
+
   return (
-    <a onClick={() => navigate("details")}>
+    <a onClick={() => temp()}>
       <div className="container-md border border-3 p-3 my-4">
         <div className="row">
           <div className="col-10">

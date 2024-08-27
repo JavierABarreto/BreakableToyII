@@ -1,10 +1,20 @@
 import { useNavigate } from "react-router-dom"
+import useDetail from "../../Hooks/useDetail";
 
 export const RoundFlightCard = () => {
   const navigate = useNavigate()
 
+  const data = { name: "1" };
+  const { setFlight }: any = useDetail();
+
+  const temp = () => {
+    setFlight(data)
+    navigate("/flights/Details")
+  }
+
+
   return (
-    <a onClick={() => navigate("details")}>
+    <a onClick={() => temp()}>
       <div className="container-md my-4">
         <div className="row">
           <div className="col-10 border border-3 border-end-0">

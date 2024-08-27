@@ -1,17 +1,18 @@
 import { Outlet } from 'react-router-dom'
 import { Navbar } from '../components/Navbar'
-import { FlightContext } from '../js/Context'
 import { useState } from 'react';
+import { DetailsProvider } from '../Context/DetailsContext';
 
 export const Root = () => {
-  const [flight, setFlight] = useState({});
-
   return (
     <div>
       <Navbar />
-      <div id="detail">
-        <Outlet />
-      </div>
+
+      <DetailsProvider>
+        <div id="detail">
+          <Outlet />
+        </div>
+      </DetailsProvider>
     </div>
   )
 }
