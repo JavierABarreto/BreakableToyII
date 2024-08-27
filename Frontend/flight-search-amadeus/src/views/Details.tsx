@@ -1,11 +1,7 @@
 import { Link } from "react-router-dom"
 import { Segments } from "../components/Details/Segments"
-import { useContext } from "react"
-import { FlightContext } from "../js/Context"
 
 export const Details = () => {
-  const data = useContext(FlightContext);
-  
   return (
     <div className="container-lg mt-5">
       <h1>Details</h1>
@@ -38,6 +34,6 @@ export const Details = () => {
           </div> 
         </div>
       </div>
-  </div>
+    </div>
   )
 }
