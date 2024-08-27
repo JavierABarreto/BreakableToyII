@@ -3,7 +3,6 @@ import { createContext, useState } from "react"
 const DetailsContext = createContext({});
 
 export const DetailsProvider = ({ children }: any) => {
-
   const [flight, setFlight] = useState()
 
   return (
