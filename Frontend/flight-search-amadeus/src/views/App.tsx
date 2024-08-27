@@ -6,7 +6,6 @@ export const App = () => {
   return (
     <div>
       <Search />
-      {/* <Link to={"/flights"}>Go</Link> */}
     </div>
   )
 }
