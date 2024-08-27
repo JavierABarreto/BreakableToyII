@@ -15,9 +15,9 @@ export const SelectComponent = ({ label, options}: props) => {
       <div className="col-6">
         <select className="form-select">
           {
-            options?.map(option => {
+            options?.map((option, index) => {
               return(
-                <option value={option.toString()}>{option}</option>
+                <option value={option.toString()} key={index}>{option}</option>
               )
             })
           }
