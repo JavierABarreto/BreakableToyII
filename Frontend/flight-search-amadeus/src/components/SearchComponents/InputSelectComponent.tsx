@@ -6,10 +6,10 @@ interface props {
 
 export const InputSelectComponent = ({ label }: props) => {
   const labelTag = label == "Departure Airport" ? "dLabelAirport" : "rLabelAirport";
-  const [btnText, setBtnText] = useState("↓")
+  const [arrowUp, setArrowUp] = useState(false)
 
   const changeBtnText = () => {
-    btnText == "↓" ? setBtnText("↑") : setBtnText("↓")
+    arrowUp ? setArrowUp(false) : setArrowUp(true)
   }
 
   return (
@@ -31,7 +31,7 @@ export const InputSelectComponent = ({ label }: props) => {
           </div>
 
           <div className="col-3 ps-0">
-            <button className="btn btn-outline-secondary" onClick={() => changeBtnText()}>{btnText}</button>
+            <button className="btn btn-outline-secondary" onClick={() => changeBtnText()}>{arrowUp ?  "↑" : "↓"}</button>
           </div>
         </div>
       </div>
