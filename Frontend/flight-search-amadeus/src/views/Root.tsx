@@ -1,14 +1,16 @@
-import React from 'react'
 import { Outlet } from 'react-router-dom'
 import { Navbar } from '../components/Navbar'
+import { FlightContext } from '../js/Context'
 
 export const Root = () => {
   return (
     <div>
       <Navbar />
-      <div id="detail">
-        <Outlet />
-      </div>
+      <FlightContext.Provider value={{}}>
+        <div id="detail">
+          <Outlet />
+        </div>
+      </FlightContext.Provider>
     </div>
   )
 }
