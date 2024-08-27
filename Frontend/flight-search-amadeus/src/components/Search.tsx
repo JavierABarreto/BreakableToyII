@@ -4,12 +4,7 @@ import dayjs from "dayjs"
 import { InputDateComponent } from "./SearchComponents/InputDateComponent"
 import { InputSelectComponent } from "./SearchComponents/InputSelectComponent"
 import { InputTextComponent } from "./SearchComponents/InputTextComponent"
-
-const temp = [
-  "SFA",
-  "SFA",
-  "SFA"
-]
+import { currenciesMock } from "../js/mockData"
 
 const date = dayjs().format("YYYY-MM-DD")
 
@@ -32,7 +27,7 @@ export const Search = () => {
               <InputTextComponent label={"No. Adultos"} />
               <InputDateComponent label={"Departure Date"} date={date} />
               <InputDateComponent label={"Return Date"} date={date} />
-              <SelectComponent label={"Currency"} options={temp} />
+              <SelectComponent label={"Currency"} options={currenciesMock} />
             </div>
 
             <div className="row">

@@ -1,10 +1,9 @@
 import { useNavigate } from "react-router-dom"
 import useDetail from "../../Hooks/useDetail";
 
-export const FlightCard = () => {
+export const FlightCard = ({ data }: any) => {
   const navigate = useNavigate()
 
-  const data = { name: "1" };
   const { setFlight }: any = useDetail();
 
   const temp = () => {

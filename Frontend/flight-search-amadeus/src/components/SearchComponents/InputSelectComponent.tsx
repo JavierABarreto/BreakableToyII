@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { IataCodes } from "../../js/mockData";
 
 interface props {
   label: String;
@@ -6,16 +7,6 @@ interface props {
 
 export const InputSelectComponent = ({ label }: props) => {
   const labelTag = label == "Departure Airport" ? "dLabelAirport" : "rLabelAirport";
-  const IataCodes: any[] = [
-    {
-      IATACode: "EWR",
-      airportName: "Newar International"
-    },
-    {
-      IATACode: "BOS",
-      airportName: "BOS International"
-    }
-  ];
 
   const [arrowUp, setArrowUp] = useState(true)
   const [dClass, setDClass] = useState("")
