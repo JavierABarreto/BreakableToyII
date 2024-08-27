@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom"
 import { SelectComponent } from "./SearchComponents/SelectComponent"
 import dayjs from "dayjs"
+import { InputDateComponent } from "./SearchComponents/InputDateComponent"
+import { InputSelectComponent } from "./SearchComponents/InputSelectComponent"
+import { InputTextComponent } from "./SearchComponents/InputTextComponent"
 
 const temp = [
   "SFA",
@@ -24,11 +27,12 @@ export const Search = () => {
 
           <div className="row border p-5">
             <div className="row">
-              <SelectComponent label={"Departure Airport"} type="select" options={temp} />
-              <SelectComponent label={"Arrival Airport"} type="select" options={temp} />
-              <SelectComponent label={"Departure Date"} type="date" date={date} />
-              <SelectComponent label={"Return Date"} type="date" date={date} />
-              <SelectComponent label={"Currency"} type="select" options={temp} />
+              <InputSelectComponent label={"Departure Airport"} />
+              <InputSelectComponent label={"Return Airport"} />
+              <InputTextComponent label={"No. Adultos"} />
+              <InputDateComponent label={"Departure Date"} date={date} />
+              <InputDateComponent label={"Return Date"} date={date} />
+              <SelectComponent label={"Currency"} options={temp} />
             </div>
 
             <div className="row">
