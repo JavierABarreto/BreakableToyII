@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom"
 import { Segments } from "../components/Details/Segments"
+import useDetail from "../Hooks/useDetail"
 
 export const Details = () => {
+  const { flight }: any = useDetail();
+  console.log(flight)
 
   return (
     <div className="container-lg mt-5">
@@ -35,6 +38,6 @@ export const Details = () => {
           </div> 
         </div>
       </div>
-  </div>
+    </div>
   )
 }
