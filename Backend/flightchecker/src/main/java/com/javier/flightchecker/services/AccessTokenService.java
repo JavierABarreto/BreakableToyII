@@ -12,12 +12,12 @@ public class AccessTokenService {
     public String getAccessToken() throws Exception {
         try {
             String accessToken = "";
-
             URI uri = new URI("https://test.api.amadeus.com/v1/security/oauth2/token");
-            String requestBody = "grant_type=client_credentials&client_id=SECRET&client_secret=SECRET";
+
+            String requestBody = "grant_type=client_credentials&client_id=PlU5zrV8FblRIkZMF6B7tjZSo6rtk0qo&client_secret=cUcm5KMeKKnNcw1C";
 
             HttpRequest postRequest = HttpRequest.newBuilder()
-                    .uri(new URI("https://test.api.amadeus.com/v1/security/oauth2/token"))
+                    .uri(uri)
                     .header("Content-Type", "application/x-www-form-urlencoded")
                     .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                     .build();

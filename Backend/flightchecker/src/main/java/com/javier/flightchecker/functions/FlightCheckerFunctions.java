@@ -6,6 +6,7 @@ import com.javier.flightchecker.services.AccessTokenService;
 import com.javier.flightchecker.services.FlightCheckerService;
 
 import java.util.Date;
+import java.util.List;
 
 public class FlightCheckerFunctions {
     private final AccessTokenService api = new AccessTokenService();

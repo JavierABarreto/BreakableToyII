@@ -2,6 +2,8 @@ package com.javier.flightchecker.services;
 
 import com.javier.flightchecker.exceptions.FlightCheckerError;
 import com.javier.flightchecker.models.Filters;
+import com.javier.flightchecker.models.FlightsData;
+
 import org.apache.tomcat.util.json.JSONParser;
 
 import java.net.URI;
@@ -53,19 +55,25 @@ public class FlightCheckerService {
         String departureAirportCode = filters.departureAirportCode();
         String arrivalAirportCode = filters.arrivalAirportCode();
         String departureDate = filters.departureDate();
+        String returnDate = filters.returnDate();
         Integer numberAdults = filters.numberAdults();
         String currency = filters.currency();
         Boolean stops = filters.stops();
         Integer max = filters.max();
 
         try {
-            String URL = "shopping/flight-offers?originLocationCode="+ departureAirportCode +
+            String URL = "shopping/flight-offers?" +
+                         "originLocationCode="+ departureAirportCode +
                          "&destinationLocationCode="+ arrivalAirportCode +
                          "&departureDate="+ departureDate +
                          "&adults="+ numberAdults +
                          "&nonStop="+ stops +
                          "&currencyCode="+ currency +
                          "&max="+max;
+            
+            if (!returnDate.isBlank()) {
+                URL = URL + "&returnDate=" + returnDate;
+            }
 
             URI URIRequest = new URI(baseURL2 + URL);
 
@@ -83,6 +91,7 @@ public class FlightCheckerService {
             if (response.statusCode() == 200) {
                 JSONParser res = new JSONParser(response.body());
                 data = res.object().get("data");
+                Object meta = res.object().get("meta");
 
                 return data;
             }
@@ -96,6 +105,7 @@ public class FlightCheckerService {
 
     public Object getIATACodes (String token, String name) {
         Object data = List.of();
+        Object flightData = List.of();
         Integer limit = 25;
         Integer offset = 0;
 
