@@ -19,7 +19,7 @@ export const Flights = () => {
                     const { id, oneWay } = flight
                     
                     return (
-                      oneWay ?
+                      !oneWay ?
                         <FlightCard data={flight} key={id} />
                       :
                         <RoundFlightCard data={flight} key={id} />
