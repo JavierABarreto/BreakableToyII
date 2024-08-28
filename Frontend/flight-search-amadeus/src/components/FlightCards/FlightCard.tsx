@@ -3,6 +3,7 @@ import useDetail from "../../Hooks/useDetail";
 import { priceString } from "../../js/price";
 import dayjs from "dayjs";
 import moment from "moment";
+import { AirportInfo } from "../../js/mockData";
 
 export const FlightCard = ({ data }: any) => {
   const navigate = useNavigate()
@@ -14,6 +15,9 @@ export const FlightCard = ({ data }: any) => {
   const departureDate = dayjs(segments[0].departure.at).format("YYYY-MM-DD HH:mm")
   const arriveDate = dayjs(segments[segments.length-1].arrival.at).format("YYYY-MM-DD HH:mm")
   const nStops = 0;
+
+  const BOSAirport = AirportInfo[0];
+  const EWRAirport = AirportInfo[1];
 
   const time = () => {
     let time = 0
@@ -53,7 +57,7 @@ export const FlightCard = ({ data }: any) => {
             </div>
             <div className="row">
               <div className="col-6">
-                <span>San Francisco (SFO) to New York (JFK)</span>
+                <span>{`${BOSAirport.address.cityName} (${BOSAirport.address.cityCode}) to ${EWRAirport.address.cityName} (${EWRAirport.address.cityCode})`}</span>
               </div>
               <div className="col-6">
                 <span>{timeString} ({nStops == 0 ? "Nonstops" : `${nStops} Stops`})</span>
