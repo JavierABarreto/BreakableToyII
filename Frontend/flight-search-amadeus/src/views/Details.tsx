@@ -74,7 +74,7 @@ export const Details = () => {
             <h4>Per traveler</h4>
             <div className="border mt-1 mb-3"></div>
 
-            <>
+            <div className="overflow-scroll" style={{ height: 200 }}>
               {
                 travelerPricings.map((traveler: any, index: any) => (
                   <div className="d-flex">
@@ -83,7 +83,7 @@ export const Details = () => {
                   </div>
                 ))
               }
-            </>
+            </div>
 
           </div> 
         </div>

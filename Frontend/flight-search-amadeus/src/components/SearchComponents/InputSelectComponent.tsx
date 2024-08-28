@@ -41,8 +41,8 @@ export const InputSelectComponent = ({ label }: props) => {
 
       <div className="col-6">
         <div className="row">
-          <div className="col-9 pe-0">
-            <input type="text" className="form-control" id={labelTag+"Input"} onChange={(text)=> setAirportName(text.target.value)} />
+          <div className="col-10 pe-0">
+            <input type="text" className="form-control" id={labelTag+"Input"} onChange={(text)=> setAirportName(text.target.value)} required />
 
             <ul className={"overflow-auto list-group mh-100 "+dClass} style={{ height: 100}}>
               {
@@ -70,7 +70,7 @@ export const InputSelectComponent = ({ label }: props) => {
             </ul>
           </div>
 
-          <div className="col-3 ps-0">
+          <div className="col-2 ps-0">
             <button className="btn btn-outline-secondary" onClick={() => displayBtn()}>{arrowUp ?  "↑" : "↓"}</button>
           </div>
         </div>

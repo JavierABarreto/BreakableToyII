@@ -15,6 +15,23 @@ export const IataCodes: any[] = [
   }
 ];
 
+export const AirportInfo: any[] =[
+    {
+        "iataCode": "EWR",
+        "address": {
+            "cityName": "New York",
+            "cityCode": "NY"
+        }
+    },
+    {
+        "iataCode": "BOS",
+        "address": {
+            "cityName": "Boston",
+            "cityCode": "BO"
+        }
+    }
+]
+
 export const flights = [
   {
       "type": "flight-offer",

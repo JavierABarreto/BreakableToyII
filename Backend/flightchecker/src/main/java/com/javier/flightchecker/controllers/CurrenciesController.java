@@ -1,12 +1,14 @@
 package com.javier.flightchecker.controllers;
 
 import com.javier.flightchecker.repository.CurrencyRepository;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class CurrenciesController {
     private final CurrencyRepository currencyRepository;
 

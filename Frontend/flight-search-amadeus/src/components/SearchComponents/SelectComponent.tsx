@@ -6,6 +6,7 @@ interface props {
 }
 
 export const SelectComponent = ({ label, options}: props) => {
+  
   return (
     <div className="row mb-3">
       <div className="col-1"/>
