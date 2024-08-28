@@ -7,5 +7,6 @@ public record Filters(
     String returnDate,
     Integer numberAdults,
     String currency,
-    Boolean stops
+    Boolean stops,
+    Integer max
 ) {}
