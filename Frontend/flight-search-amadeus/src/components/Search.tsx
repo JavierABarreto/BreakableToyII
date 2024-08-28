@@ -1,14 +1,16 @@
-import { Link } from "react-router-dom"
+import { Link, useLoaderData } from "react-router-dom"
 import { SelectComponent } from "./SearchComponents/SelectComponent"
 import dayjs from "dayjs"
 import { InputDateComponent } from "./SearchComponents/InputDateComponent"
 import { InputSelectComponent } from "./SearchComponents/InputSelectComponent"
 import { InputTextComponent } from "./SearchComponents/InputTextComponent"
+import { useState } from "react"
 import { currenciesMock } from "../js/mockData"
 
-const date = dayjs().format("YYYY-MM-DD")
-
 export const Search = () => {
+  const date = dayjs().format("YYYY-MM-DD")
+  const currencies: any = useLoaderData();
+
   return (
     <div className="container mt-5">
       <div className="row">
@@ -20,14 +22,16 @@ export const Search = () => {
             <h2>Flight Search</h2>
           </div>
 
-          <div className="row border p-5">
+          <form className="row border p-5" onSubmit={(e) => {
+            e.preventDefault()
+          }}>
             <div className="row">
-              <InputSelectComponent label={"Departure Airport"} />
-              <InputSelectComponent label={"Return Airport"} />
-              <InputTextComponent label={"No. Adultos"} />
-              <InputDateComponent label={"Departure Date"} date={date} />
-              <InputDateComponent label={"Return Date"} date={date} />
-              <SelectComponent label={"Currency"} options={currenciesMock} />
+                <InputSelectComponent label={"Departure Airport"} />
+                <InputSelectComponent label={"Return Airport"} />
+                <InputTextComponent label={"No. Adultos"} />
+                <InputDateComponent label={"Departure Date"} date={date} />
+                <InputDateComponent label={"Return Date"} date={date} />
+                <SelectComponent label={"Currency"} options={currencies} />
             </div>
 
             <div className="row">
@@ -41,9 +45,10 @@ export const Search = () => {
             </div>
 
             <div className="row d-flex justify-content-end mt-2">
-              <Link className="col-2 btn btn-primary" to={"/flights"}>Search</Link>
+              <button className="col-2 btn btn-primary" type="submit" >Search</button>
+              {/* <Link className="col-2 btn btn-primary" to={"/flights"}>Search</Link> */}
             </div>
-          </div>
+          </form>
 
         </div>
 

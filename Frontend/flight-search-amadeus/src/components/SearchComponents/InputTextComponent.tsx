@@ -10,7 +10,7 @@ export const InputTextComponent = ({ label }: props) => {
       <label htmlFor="colFormLabel" className="col-4 col-form-label text-end">{label}</label>
 
       <div className="col-6">
-        <input className="form-control" id="colFormLabel" type="number" defaultValue={1} />
+        <input className="form-control" id="colFormLabel" type="number" defaultValue={1} required />
       </div>
 
       <div className="col-1"/>
