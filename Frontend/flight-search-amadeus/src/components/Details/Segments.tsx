@@ -1,8 +1,7 @@
 import dayjs from "dayjs"
 
-export const Segments = (data: any) => {
-  console.log(data)
-  const { aircraft, arrival, departure, id, number } = data?.data
+export const Segments = ({segment, travelerPricings}: any) => {
+  const { aircraft, arrival, departure, id, number } = segment
   const { at: arrivalAt, iataCode: arrivalIATA } = arrival
   const { at: departureAt, iataCode: departureIATA } = departure
 
@@ -23,8 +22,25 @@ export const Segments = (data: any) => {
           <p>{`AIRLINE (XX) ${aircraft.code}`}</p>
         </div>
 
-        <div className="col border" style={{ height: 170 }}>
+        <div className="col border overflow-scroll" style={{ height: 170 }}>
           <p>Travelers fare details</p>
+          <div className="fareDetailsContainer">
+            {
+              travelerPricings.map((traveler: any, index: any) => {
+                const { travelerId, fareDetailsBySegment } = traveler
+                const travelerData = fareDetailsBySegment[id - 1]
+                console.log(travelerData)
+
+                return (
+                  <div className="border-top border-bottom my-2 p-2" key={"travelerFare-"+index}>
+                    <p className="m-0">Traveler {travelerId}</p>
+                    <p className="m-0">Cabin: {travelerData.cabin}</p>
+                    <p className="m-0">Class: {travelerData.class}</p>
+                  </div>
+                )
+              })
+            }
+          </div>
         </div>
       </div>
     </div>

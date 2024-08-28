@@ -5,7 +5,6 @@ import { priceString } from "../js/price";
 
 export const Details = () => {
   const { flight }: any = useDetail();
-  console.log(flight)
   const { itineraries, price, travelerPricings } = flight
   const { base, currency, fees, total } = price
 
@@ -23,7 +22,7 @@ export const Details = () => {
 
               return (
                 segments.map((segment: any, index: any) => (
-                  <Segments data={segment} />
+                  <Segments segment={segment} travelerPricings={travelerPricings} />
                 ))
               )
             })
