@@ -1,19 +1,20 @@
 import { useNavigate } from "react-router-dom"
 import useDetail from "../../Hooks/useDetail";
+import { priceString } from "../../js/price";
 
-export const FlightCard = () => {
+export const FlightCard = ({ data }: any) => {
   const navigate = useNavigate()
-
-  const data = { name: "1" };
   const { setFlight }: any = useDetail();
+  const { price, travelerPricings } = data
+  const { currency, total } = price
 
-  const temp = () => {
+  const setFlightData = () => {
     setFlight(data)
     navigate("/flights/Details")
   }
 
   return (
-    <a onClick={() => temp()}>
+    <a onClick={() => setFlightData()}>
       <div className="container-md border border-3 p-3 my-4">
         <div className="row">
           <div className="col-10">
@@ -32,7 +33,7 @@ export const FlightCard = () => {
 
           <div className="col-2 text-end">
             <div className="row">
-              <span>$1500 MXN</span>
+              <span>{priceString(currency, total)}</span>
             </div>
             <div className="row">
               <span>total</span>
@@ -55,7 +56,7 @@ export const FlightCard = () => {
 
           <div className="col-2 text-end">
             <div className="row">
-              <span>$1500 MXN</span>
+              <span>{priceString(currency, total / travelerPricings.length)}</span>
             </div>
 
             <div className="row">

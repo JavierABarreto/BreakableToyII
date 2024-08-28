@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom"
 import { FlightCard } from "../components/FlightCards/FlightCard"
 import { RoundFlightCard } from "../components/FlightCards/RoundFlightCard"
-
-const nflights = 1
+import { flights } from "../js/mockData"
 
 export const Flights = () => {
   return (
@@ -13,10 +12,20 @@ export const Flights = () => {
 
       <div className="border overflow-scroll py-2 px-4 position-relative" style={{ height: 600 }}>
           {
-            nflights > 0 ?
+            flights.length > 0 ?
               <>
-                <FlightCard />
-                <RoundFlightCard />
+                {
+                  flights.map((flight, index) => {
+                    const { id, oneWay } = flight
+                    
+                    return (
+                      !oneWay ?
+                        <FlightCard data={flight} key={id} />
+                      :
+                        <RoundFlightCard data={flight} key={id} />
+                    )
+                  })
+                }
               </>
             :
               <h2 className="position-absolute top-50 start-50 translate-middle text-secondary">No flights available</h2>

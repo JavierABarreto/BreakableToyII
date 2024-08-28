@@ -1,0 +1,667 @@
+export const currenciesMock = [
+  "USD",
+  "MXN",
+  "EUR"
+]
+
+export const IataCodes: any[] = [
+  {
+    IATACode: "EWR",
+    airportName: "Newar International"
+  },
+  {
+    IATACode: "BOS",
+    airportName: "BOS International"
+  }
+];
+
+export const flights = [
+  {
+      "type": "flight-offer",
+      "id": "1",
+      "source": "GDS",
+      "instantTicketingRequired": false,
+      "nonHomogeneous": false,
+      "oneWay": false,
+      "isUpsellOffer": false,
+      "lastTicketingDate": "2024-08-28",
+      "lastTicketingDateTime": "2024-08-28",
+      "numberOfBookableSeats": 9,
+      "itineraries": [
+          {
+              "duration": "PT1H23M",
+              "segments": [
+                  {
+                      "departure": {
+                          "iataCode": "BOS",
+                          "terminal": "B",
+                          "at": "2024-10-20T06:00:00"
+                      },
+                      "arrival": {
+                          "iataCode": "EWR",
+                          "terminal": "C",
+                          "at": "2024-10-20T07:23:00"
+                      },
+                      "carrierCode": "UA",
+                      "number": "1833",
+                      "aircraft": {
+                          "code": "7M9"
+                      },
+                      "operating": {
+                          "carrierCode": "UA"
+                      },
+                      "duration": "PT1H23M",
+                      "id": "1",
+                      "numberOfStops": 0,
+                      "blacklistedInEU": false
+                  }
+              ]
+          }
+      ],
+      "price": {
+          "currency": "USD",
+          "total": "167.02",
+          "base": "127.22",
+          "fees": [
+              {
+                  "amount": "0.00",
+                  "type": "SUPPLIER"
+              },
+              {
+                  "amount": "0.00",
+                  "type": "TICKETING"
+              }
+          ],
+          "grandTotal": "167.02"
+      },
+      "pricingOptions": {
+          "fareType": [
+              "PUBLISHED"
+          ],
+          "includedCheckedBagsOnly": false
+      },
+      "validatingAirlineCodes": [
+          "UA"
+      ],
+      "travelerPricings": [
+          {
+              "travelerId": "1",
+              "fareOption": "STANDARD",
+              "travelerType": "ADULT",
+              "price": {
+                  "currency": "USD",
+                  "total": "83.51",
+                  "base": "63.61"
+              },
+              "fareDetailsBySegment": [
+                  {
+                      "segmentId": "1",
+                      "cabin": "ECONOMY",
+                      "fareBasis": "GAA4PFDN",
+                      "brandedFare": "ECONOMY",
+                      "brandedFareLabel": "ECONOMY",
+                      "class": "G",
+                      "includedCheckedBags": {
+                          "quantity": 0
+                      },
+                      "amenities": [
+                          {
+                              "description": "CHECKED BAG FIRST",
+                              "isChargeable": true,
+                              "amenityType": "BAGGAGE",
+                              "amenityProvider": {
+                                  "name": "BrandedFare"
+                              }
+                          },
+                          {
+                              "description": "SECOND BAG",
+                              "isChargeable": true,
+                              "amenityType": "BAGGAGE",
+                              "amenityProvider": {
+                                  "name": "BrandedFare"
+                              }
+                          },
+                          {
+                              "description": "PRE RESERVED SEAT ASSIGNMENT",
+                              "isChargeable": false,
+                              "amenityType": "PRE_RESERVED_SEAT",
+                              "amenityProvider": {
+                                  "name": "BrandedFare"
+                              }
+                          },
+                          {
+                              "description": "PRIORITY BOARDING",
+                              "isChargeable": true,
+                              "amenityType": "TRAVEL_SERVICES",
+                              "amenityProvider": {
+                                  "name": "BrandedFare"
+                              }
+                          },
+                          {
+                              "description": "ECONOMY TO ECONOMY PLUS",
+                              "isChargeable": true,
+                              "amenityType": "UPGRADES",
+                              "amenityProvider": {
+                                  "name": "BrandedFare"
+                              }
+                          },
+                          {
+                              "description": "MILEAGE ACCRUAL",
+                              "isChargeable": false,
+                              "amenityType": "BRANDED_FARES",
+                              "amenityProvider": {
+                                  "name": "BrandedFare"
+                              }
+                          }
+                      ]
+                  }
+              ]
+          },
+          {
+              "travelerId": "2",
+              "fareOption": "STANDARD",
+              "travelerType": "ADULT",
+              "price": {
+                  "currency": "USD",
+                  "total": "83.51",
+                  "base": "63.61"
+              },
+              "fareDetailsBySegment": [
+                  {
+                      "segmentId": "1",
+                      "cabin": "ECONOMY",
+                      "fareBasis": "GAA4PFDN",
+                      "brandedFare": "ECONOMY",
+                      "brandedFareLabel": "ECONOMY",
+                      "class": "G",
+                      "includedCheckedBags": {
+                          "quantity": 0
+                      },
+                      "amenities": [
+                          {
+                              "description": "CHECKED BAG FIRST",
+                              "isChargeable": true,
+                              "amenityType": "BAGGAGE",
+                              "amenityProvider": {
+                                  "name": "BrandedFare"
+                              }
+                          },
+                          {
+                              "description": "SECOND BAG",
+                              "isChargeable": true,
+                              "amenityType": "BAGGAGE",
+                              "amenityProvider": {
+                                  "name": "BrandedFare"
+                              }
+                          },
+                          {
+                              "description": "PRE RESERVED SEAT ASSIGNMENT",
+                              "isChargeable": false,
+                              "amenityType": "PRE_RESERVED_SEAT",
+                              "amenityProvider": {
+                                  "name": "BrandedFare"
+                              }
+                          },
+                          {
+                              "description": "PRIORITY BOARDING",
+                              "isChargeable": true,
+                              "amenityType": "TRAVEL_SERVICES",
+                              "amenityProvider": {
+                                  "name": "BrandedFare"
+                              }
+                          },
+                          {
+                              "description": "ECONOMY TO ECONOMY PLUS",
+                              "isChargeable": true,
+                              "amenityType": "UPGRADES",
+                              "amenityProvider": {
+                                  "name": "BrandedFare"
+                              }
+                          },
+                          {
+                              "description": "MILEAGE ACCRUAL",
+                              "isChargeable": false,
+                              "amenityType": "BRANDED_FARES",
+                              "amenityProvider": {
+                                  "name": "BrandedFare"
+                              }
+                          }
+                      ]
+                  }
+              ]
+          }
+      ]
+  },
+  {
+      "type": "flight-offer",
+      "id": "2",
+      "source": "GDS",
+      "instantTicketingRequired": false,
+      "nonHomogeneous": false,
+      "oneWay": false,
+      "isUpsellOffer": false,
+      "lastTicketingDate": "2024-08-28",
+      "lastTicketingDateTime": "2024-08-28",
+      "numberOfBookableSeats": 9,
+      "itineraries": [
+          {
+              "duration": "PT1H23M",
+              "segments": [
+                  {
+                      "departure": {
+                          "iataCode": "BOS",
+                          "terminal": "B",
+                          "at": "2024-10-20T07:30:00"
+                      },
+                      "arrival": {
+                          "iataCode": "EWR",
+                          "terminal": "C",
+                          "at": "2024-10-20T08:53:00"
+                      },
+                      "carrierCode": "UA",
+                      "number": "570",
+                      "aircraft": {
+                          "code": "7M9"
+                      },
+                      "operating": {
+                          "carrierCode": "UA"
+                      },
+                      "duration": "PT1H23M",
+                      "id": "2",
+                      "numberOfStops": 0,
+                      "blacklistedInEU": false
+                  }
+              ]
+          }
+      ],
+      "price": {
+          "currency": "USD",
+          "total": "167.02",
+          "base": "127.22",
+          "fees": [
+              {
+                  "amount": "0.00",
+                  "type": "SUPPLIER"
+              },
+              {
+                  "amount": "0.00",
+                  "type": "TICKETING"
+              }
+          ],
+          "grandTotal": "167.02"
+      },
+      "pricingOptions": {
+          "fareType": [
+              "PUBLISHED"
+          ],
+          "includedCheckedBagsOnly": false
+      },
+      "validatingAirlineCodes": [
+          "UA"
+      ],
+      "travelerPricings": [
+          {
+              "travelerId": "1",
+              "fareOption": "STANDARD",
+              "travelerType": "ADULT",
+              "price": {
+                  "currency": "USD",
+                  "total": "83.51",
+                  "base": "63.61"
+              },
+              "fareDetailsBySegment": [
+                  {
+                      "segmentId": "2",
+                      "cabin": "ECONOMY",
+                      "fareBasis": "GAA4PFDN",
+                      "brandedFare": "ECONOMY",
+                      "brandedFareLabel": "ECONOMY",
+                      "class": "G",
+                      "includedCheckedBags": {
+                          "quantity": 0
+                      },
+                      "amenities": [
+                          {
+                              "description": "CHECKED BAG FIRST",
+                              "isChargeable": true,
+                              "amenityType": "BAGGAGE",
+                              "amenityProvider": {
+                                  "name": "BrandedFare"
+                              }
+                          },
+                          {
+                              "description": "SECOND BAG",
+                              "isChargeable": true,
+                              "amenityType": "BAGGAGE",
+                              "amenityProvider": {
+                                  "name": "BrandedFare"
+                              }
+                          },
+                          {
+                              "description": "PRE RESERVED SEAT ASSIGNMENT",
+                              "isChargeable": false,
+                              "amenityType": "PRE_RESERVED_SEAT",
+                              "amenityProvider": {
+                                  "name": "BrandedFare"
+                              }
+                          },
+                          {
+                              "description": "PRIORITY BOARDING",
+                              "isChargeable": true,
+                              "amenityType": "TRAVEL_SERVICES",
+                              "amenityProvider": {
+                                  "name": "BrandedFare"
+                              }
+                          },
+                          {
+                              "description": "ECONOMY TO ECONOMY PLUS",
+                              "isChargeable": true,
+                              "amenityType": "UPGRADES",
+                              "amenityProvider": {
+                                  "name": "BrandedFare"
+                              }
+                          },
+                          {
+                              "description": "MILEAGE ACCRUAL",
+                              "isChargeable": false,
+                              "amenityType": "BRANDED_FARES",
+                              "amenityProvider": {
+                                  "name": "BrandedFare"
+                              }
+                          }
+                      ]
+                  }
+              ]
+          },
+          {
+              "travelerId": "2",
+              "fareOption": "STANDARD",
+              "travelerType": "ADULT",
+              "price": {
+                  "currency": "USD",
+                  "total": "83.51",
+                  "base": "63.61"
+              },
+              "fareDetailsBySegment": [
+                  {
+                      "segmentId": "2",
+                      "cabin": "ECONOMY",
+                      "fareBasis": "GAA4PFDN",
+                      "brandedFare": "ECONOMY",
+                      "brandedFareLabel": "ECONOMY",
+                      "class": "G",
+                      "includedCheckedBags": {
+                          "quantity": 0
+                      },
+                      "amenities": [
+                          {
+                              "description": "CHECKED BAG FIRST",
+                              "isChargeable": true,
+                              "amenityType": "BAGGAGE",
+                              "amenityProvider": {
+                                  "name": "BrandedFare"
+                              }
+                          },
+                          {
+                              "description": "SECOND BAG",
+                              "isChargeable": true,
+                              "amenityType": "BAGGAGE",
+                              "amenityProvider": {
+                                  "name": "BrandedFare"
+                              }
+                          },
+                          {
+                              "description": "PRE RESERVED SEAT ASSIGNMENT",
+                              "isChargeable": false,
+                              "amenityType": "PRE_RESERVED_SEAT",
+                              "amenityProvider": {
+                                  "name": "BrandedFare"
+                              }
+                          },
+                          {
+                              "description": "PRIORITY BOARDING",
+                              "isChargeable": true,
+                              "amenityType": "TRAVEL_SERVICES",
+                              "amenityProvider": {
+                                  "name": "BrandedFare"
+                              }
+                          },
+                          {
+                              "description": "ECONOMY TO ECONOMY PLUS",
+                              "isChargeable": true,
+                              "amenityType": "UPGRADES",
+                              "amenityProvider": {
+                                  "name": "BrandedFare"
+                              }
+                          },
+                          {
+                              "description": "MILEAGE ACCRUAL",
+                              "isChargeable": false,
+                              "amenityType": "BRANDED_FARES",
+                              "amenityProvider": {
+                                  "name": "BrandedFare"
+                              }
+                          }
+                      ]
+                  }
+              ]
+          }
+      ]
+  },
+  {
+      "type": "flight-offer",
+      "id": "3",
+      "source": "GDS",
+      "instantTicketingRequired": false,
+      "nonHomogeneous": false,
+      "oneWay": false,
+      "isUpsellOffer": false,
+      "lastTicketingDate": "2024-08-28",
+      "lastTicketingDateTime": "2024-08-28",
+      "numberOfBookableSeats": 9,
+      "itineraries": [
+          {
+              "duration": "PT1H25M",
+              "segments": [
+                  {
+                      "departure": {
+                          "iataCode": "BOS",
+                          "terminal": "B",
+                          "at": "2024-10-20T09:05:00"
+                      },
+                      "arrival": {
+                          "iataCode": "EWR",
+                          "terminal": "C",
+                          "at": "2024-10-20T10:30:00"
+                      },
+                      "carrierCode": "UA",
+                      "number": "1805",
+                      "aircraft": {
+                          "code": "739"
+                      },
+                      "operating": {
+                          "carrierCode": "UA"
+                      },
+                      "duration": "PT1H25M",
+                      "id": "3",
+                      "numberOfStops": 0,
+                      "blacklistedInEU": false
+                  }
+              ]
+          }
+      ],
+      "price": {
+          "currency": "USD",
+          "total": "196.92",
+          "base": "155.12",
+          "fees": [
+              {
+                  "amount": "0.00",
+                  "type": "SUPPLIER"
+              },
+              {
+                  "amount": "0.00",
+                  "type": "TICKETING"
+              }
+          ],
+          "grandTotal": "196.92"
+      },
+      "pricingOptions": {
+          "fareType": [
+              "PUBLISHED"
+          ],
+          "includedCheckedBagsOnly": false
+      },
+      "validatingAirlineCodes": [
+          "UA"
+      ],
+      "travelerPricings": [
+          {
+              "travelerId": "1",
+              "fareOption": "STANDARD",
+              "travelerType": "ADULT",
+              "price": {
+                  "currency": "USD",
+                  "total": "98.46",
+                  "base": "77.56"
+              },
+              "fareDetailsBySegment": [
+                  {
+                      "segmentId": "3",
+                      "cabin": "ECONOMY",
+                      "fareBasis": "KAA7PFDN",
+                      "brandedFare": "ECONOMY",
+                      "brandedFareLabel": "ECONOMY",
+                      "class": "K",
+                      "includedCheckedBags": {
+                          "quantity": 0
+                      },
+                      "amenities": [
+                          {
+                              "description": "CHECKED BAG FIRST",
+                              "isChargeable": true,
+                              "amenityType": "BAGGAGE",
+                              "amenityProvider": {
+                                  "name": "BrandedFare"
+                              }
+                          },
+                          {
+                              "description": "SECOND BAG",
+                              "isChargeable": true,
+                              "amenityType": "BAGGAGE",
+                              "amenityProvider": {
+                                  "name": "BrandedFare"
+                              }
+                          },
+                          {
+                              "description": "PRE RESERVED SEAT ASSIGNMENT",
+                              "isChargeable": false,
+                              "amenityType": "PRE_RESERVED_SEAT",
+                              "amenityProvider": {
+                                  "name": "BrandedFare"
+                              }
+                          },
+                          {
+                              "description": "PRIORITY BOARDING",
+                              "isChargeable": true,
+                              "amenityType": "TRAVEL_SERVICES",
+                              "amenityProvider": {
+                                  "name": "BrandedFare"
+                              }
+                          },
+                          {
+                              "description": "ECONOMY TO ECONOMY PLUS",
+                              "isChargeable": true,
+                              "amenityType": "UPGRADES",
+                              "amenityProvider": {
+                                  "name": "BrandedFare"
+                              }
+                          },
+                          {
+                              "description": "MILEAGE ACCRUAL",
+                              "isChargeable": false,
+                              "amenityType": "BRANDED_FARES",
+                              "amenityProvider": {
+                                  "name": "BrandedFare"
+                              }
+                          }
+                      ]
+                  }
+              ]
+          },
+          {
+              "travelerId": "2",
+              "fareOption": "STANDARD",
+              "travelerType": "ADULT",
+              "price": {
+                  "currency": "USD",
+                  "total": "98.46",
+                  "base": "77.56"
+              },
+              "fareDetailsBySegment": [
+                  {
+                      "segmentId": "3",
+                      "cabin": "ECONOMY",
+                      "fareBasis": "KAA7PFDN",
+                      "brandedFare": "ECONOMY",
+                      "brandedFareLabel": "ECONOMY",
+                      "class": "K",
+                      "includedCheckedBags": {
+                          "quantity": 0
+                      },
+                      "amenities": [
+                          {
+                              "description": "CHECKED BAG FIRST",
+                              "isChargeable": true,
+                              "amenityType": "BAGGAGE",
+                              "amenityProvider": {
+                                  "name": "BrandedFare"
+                              }
+                          },
+                          {
+                              "description": "SECOND BAG",
+                              "isChargeable": true,
+                              "amenityType": "BAGGAGE",
+                              "amenityProvider": {
+                                  "name": "BrandedFare"
+                              }
+                          },
+                          {
+                              "description": "PRE RESERVED SEAT ASSIGNMENT",
+                              "isChargeable": false,
+                              "amenityType": "PRE_RESERVED_SEAT",
+                              "amenityProvider": {
+                                  "name": "BrandedFare"
+                              }
+                          },
+                          {
+                              "description": "PRIORITY BOARDING",
+                              "isChargeable": true,
+                              "amenityType": "TRAVEL_SERVICES",
+                              "amenityProvider": {
+                                  "name": "BrandedFare"
+                              }
+                          },
+                          {
+                              "description": "ECONOMY TO ECONOMY PLUS",
+                              "isChargeable": true,
+                              "amenityType": "UPGRADES",
+                              "amenityProvider": {
+                                  "name": "BrandedFare"
+                              }
+                          },
+                          {
+                              "description": "MILEAGE ACCRUAL",
+                              "isChargeable": false,
+                              "amenityType": "BRANDED_FARES",
+                              "amenityProvider": {
+                                  "name": "BrandedFare"
+                              }
+                          }
+                      ]
+                  }
+              ]
+          }
+      ]
+  }
+]

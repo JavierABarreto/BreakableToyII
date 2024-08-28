@@ -1,20 +1,19 @@
 import { useNavigate } from "react-router-dom"
 import useDetail from "../../Hooks/useDetail";
 
-export const RoundFlightCard = () => {
+export const RoundFlightCard = ({ data }: any) => {
   const navigate = useNavigate()
-
-  const data = { name: "1" };
   const { setFlight }: any = useDetail();
+  const { price, travelerPricings } = data
+  const { currency, total } = price
 
-  const temp = () => {
+  const setFlightData = () => {
     setFlight(data)
     navigate("/flights/Details")
   }
 
-
   return (
-    <a onClick={() => temp()}>
+    <a onClick={() => setFlightData()}>
       <div className="container-md my-4">
         <div className="row">
           <div className="col-10 border border-3 border-end-0">
@@ -51,12 +50,12 @@ export const RoundFlightCard = () => {
 
           <div className="col-2 border border-3 p-3">
             <div className="row text-end">
-              <span>$1500 MXN</span>
+              <span>${total+" "+currency}</span>
               <span>total</span>
             </div>
 
             <div className="row text-end mt-2">
-              <span>$300 MXN</span>
+              <span>${(total / travelerPricings.length)+" "+currency}</span>
               <span>per traveler</span>
             </div>
           </div>
