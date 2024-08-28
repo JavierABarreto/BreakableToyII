@@ -23,7 +23,7 @@ export const Segments = ({segment, travelerPricings}: any) => {
         </div>
 
         <div className="col border overflow-scroll" style={{ height: 170 }}>
-          <p>Travelers fare details</p>
+          <p className="my-2">Travelers fare details</p>
           <div className="fareDetailsContainer">
             {
               travelerPricings.map((traveler: any, index: any) => {
@@ -36,6 +36,23 @@ export const Segments = ({segment, travelerPricings}: any) => {
                     <p className="m-0">Traveler {travelerId}</p>
                     <p className="m-0">Cabin: {travelerData.cabin}</p>
                     <p className="m-0">Class: {travelerData.class}</p>
+                    <p className="m-0">Amenities:</p>
+                    <div className="px-2 py-1">
+                      <div className="d-flex">
+                        <p className="col">Amenities</p>
+                        <p className="col text-end">hasCost</p>
+                      </div>
+                      {
+                        travelerData.amenities.map((amenity: any) => {
+                          return (
+                            <div className="d-flex">
+                              <p className="col-4">{amenity.description}</p>
+                              <p className="col text-end">{amenity.isChargeable ? "YES" : "NO"}</p>
+                            </div>
+                          )
+                        })
+                      }
+                    </div>
                   </div>
                 )
               })

@@ -14,22 +14,27 @@ export const Details = () => {
 
       <Link className="btn btn-dark my-4" to={"/flights"}>{"< Go Back"}</Link>
 
-      <div className="row border p-4" style={{ height: 600 }}>
-        <div className="col-8 m-1 overflow-scroll" style={{ height: 500 }}>
+      <div className="row p-4" >
+        <div className="col-8 m-1 overflow-scroll" style={{ height: 800 }}>
           {
             itineraries.map((itinerary: any, index: any) => {
               const { segments } = itinerary
 
               return (
                 segments.map((segment: any, index: any) => (
-                  <Segments segment={segment} travelerPricings={travelerPricings} />
+                  <>
+                    <Segments segment={segment} travelerPricings={travelerPricings} />
+                    <Segments segment={segment} travelerPricings={travelerPricings} />
+                    <Segments segment={segment} travelerPricings={travelerPricings} />
+                    <Segments segment={segment} travelerPricings={travelerPricings} />
+                  </>
                 ))
               )
             })
           }
         </div>
 
-        <div className="col border m-1 p-4 overflow-scroll">
+        <div className="col border m-1 p-4 overflow-scroll" style={{ height: 600 }}>
           <div className="row">
             <h4>Price Breakdown</h4>
             <div className="border"></div>
