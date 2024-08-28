@@ -4,12 +4,13 @@ import dayjs from "dayjs"
 import { InputDateComponent } from "./SearchComponents/InputDateComponent"
 import { InputSelectComponent } from "./SearchComponents/InputSelectComponent"
 import { InputTextComponent } from "./SearchComponents/InputTextComponent"
-import { useState } from "react"
 import { currenciesMock } from "../js/mockData"
 
 export const Search = () => {
   const date = dayjs().format("YYYY-MM-DD")
-  const currencies: any = useLoaderData();
+  let currencies: any = useLoaderData();
+
+  currencies == undefined ? currenciesMock : currencies
 
   return (
     <div className="container mt-5">
@@ -46,7 +47,6 @@ export const Search = () => {
 
             <div className="row d-flex justify-content-end mt-2">
               <button className="col-2 btn btn-primary" type="submit" >Search</button>
-              {/* <Link className="col-2 btn btn-primary" to={"/flights"}>Search</Link> */}
             </div>
           </form>
 

@@ -29,7 +29,6 @@ export const Segments = ({segment, travelerPricings}: any) => {
               travelerPricings.map((traveler: any, index: any) => {
                 const { travelerId, fareDetailsBySegment } = traveler
                 const travelerData = fareDetailsBySegment[id - 1]
-                console.log(travelerData)
 
                 return (
                   <div className="border-top border-bottom my-2 p-2" key={"travelerFare-"+index}>
