@@ -1,8 +1,10 @@
 package com.javier.flightchecker.services;
 
 import com.javier.flightchecker.exceptions.FlightCheckerError;
+import com.javier.flightchecker.mockdata.FlightsMockData;
 import com.javier.flightchecker.models.Filters;
 import com.javier.flightchecker.models.FlightsData;
+import com.javier.flightchecker.functions.FlightCheckerFunctions;
 
 import org.apache.tomcat.util.json.JSONParser;
 
@@ -10,11 +12,18 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 public class FlightCheckerService {
     private String baseURL1 = "https://test.api.amadeus.com/v1/";
     private String baseURL2 = "https://test.api.amadeus.com/v2/";
+    private FlightsMockData mockData = new FlightsMockData();
 
     public Object getAirlineData(String IATACode, String token) {
         Object data = List.of();
@@ -60,6 +69,10 @@ public class FlightCheckerService {
         String currency = filters.currency();
         Boolean stops = filters.stops();
         Integer max = filters.max();
+        Boolean sortByPrice = filters.sortByPrice();
+        String orderPrice = filters.orderPrice();
+        Boolean sortByDate = filters.sortByDate();
+        String orderDate = filters.orderDate();
 
         try {
             String URL = "shopping/flight-offers?" +
@@ -75,7 +88,7 @@ public class FlightCheckerService {
                 URL = URL + "&returnDate=" + returnDate;
             }
 
-            URI URIRequest = new URI(baseURL2 + URL);
+            /*URI URIRequest = new URI(baseURL2 + URL);
 
             HttpRequest getRequest = HttpRequest.newBuilder()
                     .uri(URIRequest)
@@ -89,14 +102,20 @@ public class FlightCheckerService {
             HttpResponse<String> response = httpClient.send(getRequest, HttpResponse.BodyHandlers.ofString());
 
             if (response.statusCode() == 200) {
-                JSONParser res = new JSONParser(response.body());
-                data = res.object().get("data");
-                Object meta = res.object().get("meta");
+            */
+//                JSONParser retrievedData = new JSONParser(response.body());
+//                Object meta = res.object().get("meta");
+                String retrievedData = mockData.getMockFlights();
 
+                List<Object> flights = (List<Object>) new JSONParser(retrievedData).object().get("data");
+
+                List<Object> sortedFlights = sorter(flights, sortByPrice, orderPrice, sortByDate, orderDate);
+
+                data = sortedFlights;
                 return data;
-            }
+            // }
 
-            throw new FlightCheckerError(response.toString());
+            // throw new FlightCheckerError(response.toString());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -138,5 +157,84 @@ public class FlightCheckerService {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private List<Object>  sorter (List<Object> flights, Boolean sortByPrice, String orderPrice, Boolean sortByDate, String orderDate) {
+        if(sortByPrice) {
+            List<Object> sortedByPrice = flights;
+
+            for (Integer i = 0; i < sortedByPrice.size() - 1; i++) {
+                LinkedHashMap FlightObj1 = (LinkedHashMap) sortedByPrice.get(i+1);
+                LinkedHashMap FlightObj2 = (LinkedHashMap) sortedByPrice.get(i);
+
+                LinkedHashMap flightPrice1 = (LinkedHashMap) FlightObj1.get("price");
+                LinkedHashMap flightPrice2 = (LinkedHashMap) FlightObj2.get("price");
+
+                Double total1 = Double.parseDouble(flightPrice1.get("total").toString());
+                Double total2 = Double.parseDouble(flightPrice2.get("total").toString());
+
+                if (total2 < total1) {
+                    sortedByPrice.set(i, FlightObj1);
+                    sortedByPrice.set(i+1, FlightObj2);
+                }
+            }
+
+            switch (orderPrice) {
+                case "asc":
+                    flights = sortedByPrice.reversed();
+                    break;
+                case "dsc":
+                    flights = sortedByPrice;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
+        if(sortByDate) {
+            List<Object> sortedByDate = flights;
+
+            for (Integer i = 0; i < sortedByDate.size() - 1; i++) {
+                LinkedHashMap FlightObj1 = (LinkedHashMap) flights.get(i+1);
+                LinkedHashMap FlightObj2 = (LinkedHashMap) flights.get(i);
+
+                ArrayList flightIti1 = (ArrayList) FlightObj1.get("itineraries");
+                ArrayList flightIti2 = (ArrayList) FlightObj2.get("itineraries");
+
+                LinkedHashMap flightItiData1 = (LinkedHashMap) flightIti1.getFirst();
+                LinkedHashMap flightItiData2 = (LinkedHashMap) flightIti2.getFirst();
+
+                ArrayList flightSegments1 = (ArrayList) flightItiData1.get("segments");
+                ArrayList flightSegments2 = (ArrayList) flightItiData2.get("segments");
+
+                LinkedHashMap flightSegmentsData1 = (LinkedHashMap) flightSegments1.getFirst();
+                LinkedHashMap flightSegmentsData2 = (LinkedHashMap) flightSegments2.getFirst();
+
+                LinkedHashMap flightDeparture1 = (LinkedHashMap) flightSegmentsData1.get("departure");
+                LinkedHashMap flightDeparture2 = (LinkedHashMap) flightSegmentsData2.get("departure");
+
+                Long flightAt1 = LocalDateTime.parse((String) flightDeparture1.get("at")).toEpochSecond(ZoneOffset.UTC);
+                Long flightAt2 = LocalDateTime.parse((String) flightDeparture2.get("at")).toEpochSecond(ZoneOffset.UTC);
+
+                if (flightAt2 < flightAt1) {
+                    sortedByDate.set(i, FlightObj1);
+                    sortedByDate.set(i+1, FlightObj2);
+                }
+            }
+
+            switch (orderDate) {
+                case "asc":
+                    flights = sortedByDate.reversed();
+                    break;
+                case "dsc":
+                    flights = sortedByDate;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        return flights;
     }
 }

@@ -7,10 +7,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin(origins = "*")
 public class FlightCheckerController {
-    private final FlightCheckerFunctions flightChecker = new FlightCheckerFunctions();
+    private final FlightCheckerFunctions flightCheckerFunctions = new FlightCheckerFunctions();
 
     @GetMapping("/flights")
     public Object getFlights(
@@ -21,20 +23,24 @@ public class FlightCheckerController {
         @RequestParam(required = false, defaultValue = "1") Integer numberAdults,
         @RequestParam(required = false, defaultValue = "") String currency,
         @RequestParam(required = false, defaultValue = "false") Boolean nonStops,
-        @RequestParam(required = false, defaultValue = "20") Integer max
+        @RequestParam(required = false, defaultValue = "10") Integer max,
+        @RequestParam(required = false, defaultValue = "false") Boolean sortByPrice,
+        @RequestParam(required = false, defaultValue = "none") String orderPrice,
+        @RequestParam(required = false, defaultValue = "false") Boolean sortByDate,
+        @RequestParam(required = false, defaultValue = "none") String orderDate
     ){
-        Filters filters = new Filters(departureAirportCode, arrivalAirportCode, departureDate, returnDate, numberAdults, currency, nonStops, max);
+        Filters filters = new Filters(departureAirportCode, arrivalAirportCode, departureDate, returnDate, numberAdults, currency, nonStops, max, sortByPrice, orderPrice, sortByDate, orderDate);
 
-        return flightChecker.getFlights(filters);
+        return flightCheckerFunctions.getFlights(filters);
     }
 
     @GetMapping("/airlineData")
     public Object getAirlineInfo(@RequestParam(required = false, defaultValue = "") String IATACode) {
-        return flightChecker.getAirlineData(IATACode);
+        return flightCheckerFunctions.getAirlineData(IATACode);
     }
 
     @GetMapping("/IATACodes")
     public Object getIATACodes(@RequestParam(required = false, defaultValue = "") String name) {
-        return flightChecker.IATACodes(name);
+        return flightCheckerFunctions.IATACodes(name);
     }
 }

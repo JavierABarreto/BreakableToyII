@@ -1,16 +1,42 @@
-import { Link, useLoaderData } from "react-router-dom"
+import { Link, useLoaderData, useNavigate } from "react-router-dom"
 import { SelectComponent } from "./SearchComponents/SelectComponent"
 import dayjs from "dayjs"
 import { InputDateComponent } from "./SearchComponents/InputDateComponent"
 import { InputSelectComponent } from "./SearchComponents/InputSelectComponent"
 import { InputTextComponent } from "./SearchComponents/InputTextComponent"
 import { currenciesMock } from "../js/mockData"
+import { getFlights } from "../js/API"
 
 export const Search = () => {
+  const navigate = useNavigate()
   const date = dayjs().format("YYYY-MM-DD")
   let currencies: any = useLoaderData();
 
   currencies == undefined ? currenciesMock : currencies
+
+  const sendParams = () => {
+    const dCode = document.getElementById("dLabelAirportInput").value
+    const rCode = document.getElementById("rLabelAirportInput").value
+    const nAdults = document.getElementById("noAdults").value
+    const dDate = document.getElementById("dDateInput").value
+    const rDate = document.getElementById("rDateInput").value
+    const currency = document.getElementById("selectCurrency").value
+    const nonStop = document.getElementById("nonStop").checked
+
+    const params = {
+      departureAirportCode: dCode,
+      arrivalAirportCode: rCode,
+      departureDate: dDate,
+      returnDate: rDate,
+      numberAdults: nAdults,
+      currency: currency,
+      stops: nonStop,
+      max: 20
+    }
+
+    getFlights(params)
+    navigate('flights')
+  }
 
   return (
     <div className="container mt-5">
@@ -25,6 +51,7 @@ export const Search = () => {
 
           <form className="row border p-5" onSubmit={(e) => {
             e.preventDefault()
+            sendParams()
           }}>
             <div className="row">
                 <InputSelectComponent label={"Departure Airport"} />
@@ -39,8 +66,8 @@ export const Search = () => {
               <div className="col-5"/>
               <div className="col-7">
                 <div className="form-check">
-                  <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                  <label className="form-check-label" htmlFor="flexCheckDefault">Non-stop</label>
+                  <input className="form-check-input" type="checkbox" value="" id="nonStop" />
+                  <label className="form-check-label" htmlFor="nonStop">Non-stop</label>
                 </div>
               </div>
             </div>

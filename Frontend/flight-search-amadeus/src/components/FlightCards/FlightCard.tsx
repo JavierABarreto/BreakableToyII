@@ -43,7 +43,7 @@ export const FlightCard = ({ data }: any) => {
 
   const setFlightData = () => {
     setFlight(data)
-    navigate("/flights/Details")
+    navigate("/flights/details")
   }
 
 
@@ -51,21 +51,21 @@ export const FlightCard = ({ data }: any) => {
     <a onClick={() => setFlightData()}>
       <div className="container-md border border-3 p-3 my-4">
         <div className="row">
-          <div className="col-10">
+          <div className="col-9">
             <div className="row">
               <span>{departureDate} - {arriveDate}</span>
             </div>
             <div className="row">
-              <div className="col-6">
+              <div className="col-7">
                 <span>{`${BOSAirport.address.cityName} (${BOSAirport.address.cityCode}) to ${EWRAirport.address.cityName} (${EWRAirport.address.cityCode})`}</span>
               </div>
-              <div className="col-6">
+              <div className="col-5">
                 <span>{timeString} ({nStops == 0 ? "Nonstops" : `${nStops} Stops`})</span>
               </div>
             </div>
           </div>
 
-          <div className="col-2 text-end">
+          <div className="col-3 text-end">
             <div className="row">
               <span>{priceString(currency, total)}</span>
             </div>
@@ -76,13 +76,13 @@ export const FlightCard = ({ data }: any) => {
         </div>
 
         <div className="row mt-2">
-          <div className="col-10">
-            <div className="row">
-              <div className="col-6">
+          <div className="col-9">
+            <div className="row h-100">
+              <div className="col-7 d-flex align-items-end">
                 <span>Airline</span>
               </div>
 
-              <div className="col-6">
+              <div className="col-5">
                 {
                   nStops > 0 ?
                     <div>
@@ -95,7 +95,7 @@ export const FlightCard = ({ data }: any) => {
             </div>
           </div>
 
-          <div className="col-2 text-end">
+          <div className="col-3 text-end">
             <div className="row">
               <span>{priceString(currency, total / travelerPricings.length)}</span>
             </div>

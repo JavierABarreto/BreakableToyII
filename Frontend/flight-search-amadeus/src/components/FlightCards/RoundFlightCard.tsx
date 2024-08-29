@@ -9,7 +9,7 @@ export const RoundFlightCard = ({ data }: any) => {
 
   const setFlightData = () => {
     setFlight(data)
-    navigate("/flights/Details")
+    navigate("/flights/details")
   }
 
   return (

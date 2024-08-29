@@ -6,6 +6,7 @@ import com.javier.flightchecker.services.AccessTokenService;
 import com.javier.flightchecker.services.FlightCheckerService;
 
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class FlightCheckerFunctions {
@@ -25,7 +26,7 @@ public class FlightCheckerFunctions {
 
     public Object getFlights (Filters filters) {
         try {
-            TokenIsExpired();
+            // TokenIsExpired();
 
             return flight.getFlights(filters, token.getToken());
         } catch (Exception e) {
@@ -45,7 +46,7 @@ public class FlightCheckerFunctions {
 
     private void TokenIsExpired () {
         try {
-            if(token.isExpired()) {
+            if (token.isExpired()) {
                 token.setToken(api.getAccessToken());
                 token.setTokenExpTime((new Date().getTime() / 1000) + 1799);
             }

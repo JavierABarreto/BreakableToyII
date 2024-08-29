@@ -8,5 +8,9 @@ public record Filters(
     Integer numberAdults,
     String currency,
     Boolean stops,
-    Integer max
+    Integer max,
+    Boolean sortByPrice,
+    String orderPrice,
+    Boolean sortByDate,
+    String orderDate
 ) {}
