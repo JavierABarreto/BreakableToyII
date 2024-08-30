@@ -2,8 +2,14 @@ import { Link } from "react-router-dom"
 import { FlightCard } from "../components/FlightCards/FlightCard"
 import { RoundFlightCard } from "../components/FlightCards/RoundFlightCard"
 import { flights } from "../js/mockData"
+import useSearchParams from "../Hooks/useSearchParams"
 
 export const Flights = () => {
+  const { params }: any = useSearchParams();
+  const { returnDate } = params
+
+  
+
   return (
     <div className="container-md mt-5">
       <h1>Flights</h1>
@@ -19,7 +25,7 @@ export const Flights = () => {
                     const { id, oneWay } = flight
                     
                     return (
-                      !oneWay ?
+                      returnDate == "" ?
                         <FlightCard data={flight} key={id} />
                       :
                         <RoundFlightCard data={flight} key={id} />

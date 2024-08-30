@@ -1,16 +1,17 @@
-import { Link, useLoaderData, useNavigate } from "react-router-dom"
+import { useLoaderData, useNavigate } from "react-router-dom"
 import { SelectComponent } from "./SearchComponents/SelectComponent"
 import dayjs from "dayjs"
 import { InputDateComponent } from "./SearchComponents/InputDateComponent"
 import { InputSelectComponent } from "./SearchComponents/InputSelectComponent"
 import { InputTextComponent } from "./SearchComponents/InputTextComponent"
 import { currenciesMock } from "../js/mockData"
-import { getFlights } from "../js/API"
+import useSearchParams from "../Hooks/useSearchParams"
 
 export const Search = () => {
   const navigate = useNavigate()
   const date = dayjs().format("YYYY-MM-DD")
   let currencies: any = useLoaderData();
+  const { setParams }: any = useSearchParams();
 
   currencies == undefined ? currenciesMock : currencies
 
@@ -23,6 +24,7 @@ export const Search = () => {
     const currency = document.getElementById("selectCurrency").value
     const nonStop = document.getElementById("nonStop").checked
 
+
     const params = {
       departureAirportCode: dCode,
       arrivalAirportCode: rCode,
@@ -31,10 +33,14 @@ export const Search = () => {
       numberAdults: nAdults,
       currency: currency,
       stops: nonStop,
-      max: 20
+      max: 20,
+      sortByPrice: false,
+      orderPrice: "",
+      sortByDate:false,
+      orderDate: ""
     }
 
-    getFlights(params)
+    setParams(params)
     navigate('flights')
   }
 

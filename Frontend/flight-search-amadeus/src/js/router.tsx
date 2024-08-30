@@ -4,7 +4,6 @@ import {Flights} from "../views/Flights";
 import { Details } from "../views/Details";
 import { Root } from "../views/Root";
 import { currenciesLoader } from "./loaders";
-import { getCurrencies } from "./API";
 
 export const router = createBrowserRouter([
   {

@@ -17,7 +17,7 @@ export const getCurrencies = async () => {
 
 export const getFlights = async (data: any) => {
   let flightsRequest = URL + "flights?"
-  const {departureAirportCode, arrivalAirportCode, departureDate, returnDate, numberAdults, currency, stops, max } = data
+  const {departureAirportCode, arrivalAirportCode, departureDate, returnDate, numberAdults, currency, stops, max, sortByDate, sortByPrice, orderDate, orderPrice } = data
   
   if(departureAirportCode != "") {
     flightsRequest += `departureAirportCode=${departureAirportCode}&`
@@ -43,8 +43,24 @@ export const getFlights = async (data: any) => {
     flightsRequest += `currency=${currency}&`
   }
 
-  if(stops != null && stops != undefined) {
-    flightsRequest += `stops=${stops}&`
+  if(stops) {
+    flightsRequest += `sortByDate=${stops}&`
+  }
+
+  if(sortByPrice) {
+    flightsRequest += `sortByPrice=${sortByPrice}&`
+  }
+
+  if(sortByDate) {
+    flightsRequest += `sortByDate=${sortByDate}&`
+  }
+
+  if(orderPrice != "") {
+    flightsRequest += `orderPrice=${orderPrice}&`
+  }
+
+  if(orderDate != "") {
+    flightsRequest += `orderDate=${orderDate}&`
   }
 
   flightsRequest += `max=${max}&`
