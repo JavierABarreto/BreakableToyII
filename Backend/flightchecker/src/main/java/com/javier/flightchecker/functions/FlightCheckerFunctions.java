@@ -1,6 +1,7 @@
 package com.javier.flightchecker.functions;
 
 import com.javier.flightchecker.models.Filters;
+import com.javier.flightchecker.models.FlightsData;
 import com.javier.flightchecker.repository.AccessTokenRepository;
 import com.javier.flightchecker.services.AccessTokenService;
 import com.javier.flightchecker.services.FlightCheckerService;
@@ -24,7 +25,7 @@ public class FlightCheckerFunctions {
         }
     }
 
-    public Object getFlights (Filters filters) {
+    public FlightsData getFlights (Filters filters) {
         try {
             // TokenIsExpired();
 

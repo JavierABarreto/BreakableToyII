@@ -4,7 +4,6 @@ import com.javier.flightchecker.exceptions.FlightCheckerError;
 import com.javier.flightchecker.mockdata.FlightsMockData;
 import com.javier.flightchecker.models.Filters;
 import com.javier.flightchecker.models.FlightsData;
-import com.javier.flightchecker.functions.FlightCheckerFunctions;
 
 import org.apache.tomcat.util.json.JSONParser;
 
@@ -12,12 +11,8 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class FlightCheckerService {
@@ -58,7 +53,7 @@ public class FlightCheckerService {
     }
 
 
-    public Object getFlights (Filters filters, String token) {
+    public FlightsData getFlights (Filters filters, String token) {
         Object data = List.of();
 
         String departureAirportCode = filters.departureAirportCode();
@@ -75,47 +70,75 @@ public class FlightCheckerService {
         String orderDate = filters.orderDate();
 
         try {
-            String URL = "shopping/flight-offers?" +
-                         "originLocationCode="+ departureAirportCode +
-                         "&destinationLocationCode="+ arrivalAirportCode +
-                         "&departureDate="+ departureDate +
-                         "&adults="+ numberAdults +
-                         "&nonStop="+ stops +
-                         "&currencyCode="+ currency +
-                         "&max="+max;
-            
-            if (!returnDate.isBlank()) {
-                URL = URL + "&returnDate=" + returnDate;
-            }
+                String URL = "shopping/flight-offers?" +
+                             "originLocationCode="+ departureAirportCode +
+                             "&destinationLocationCode="+ arrivalAirportCode +
+                             "&departureDate="+ departureDate +
+                             "&adults="+ numberAdults +
+                             "&nonStop="+ stops +
+                             "&currencyCode="+ currency +
+                             "&max="+max;
 
-            /*URI URIRequest = new URI(baseURL2 + URL);
+                if (!returnDate.isBlank()) {
+                    URL = URL + "&returnDate=" + returnDate;
+                }
 
-            HttpRequest getRequest = HttpRequest.newBuilder()
-                    .uri(URIRequest)
-                    .header("Content-Type", "application/x-www-form-urlencoded")
-                    .header("Authorization", "Bearer "+token)
-                    .GET()
-                    .build();
+                URI URIRequest = new URI(baseURL2 + URL);
 
-            HttpClient httpClient = HttpClient.newHttpClient();
+                /*HttpRequest getRequest = HttpRequest.newBuilder()
+                        .uri(URIRequest)
+                        .header("Content-Type", "application/x-www-form-urlencoded")
+                        .header("Authorization", "Bearer "+token)
+                        .GET()
+                        .build();
 
-            HttpResponse<String> response = httpClient.send(getRequest, HttpResponse.BodyHandlers.ofString());
+                HttpClient httpClient = HttpClient.newHttpClient();
 
-            if (response.statusCode() == 200) {
-            */
-//                JSONParser retrievedData = new JSONParser(response.body());
-//                Object meta = res.object().get("meta");
-                String retrievedData = mockData.getMockFlights();
+                HttpResponse<String> response = httpClient.send(getRequest, HttpResponse.BodyHandlers.ofString());
 
-                List<Object> flights = (List<Object>) new JSONParser(retrievedData).object().get("data");
+                if (response.statusCode() == 200) {
+                */
+    //                JSONParser retrievedData = new JSONParser(response.body());
 
-                List<Object> sortedFlights = sorter(flights, sortByPrice, orderPrice, sortByDate, orderDate);
+                    String retrievedData = mockData.getMockFlights();
+                    LinkedHashMap meta = (LinkedHashMap) new JSONParser(retrievedData).object().get("meta");
+                    Integer count = Integer.parseInt(meta.get("count").toString());
 
-                data = sortedFlights;
-                return data;
-            // }
+                    List<Object> flights = (List<Object>) new JSONParser(retrievedData).object().get("data");
 
-            // throw new FlightCheckerError(response.toString());
+                    List<Object> sortedFlights = sorter(flights, sortByPrice, orderPrice, sortByDate, orderDate);
+
+                    Integer tempMax = max;
+                    Integer min = max - 9;
+                    Double nPages = 0.0;
+                    Integer currentPage = 0;
+
+                    if (sortedFlights.size() <= 10) {
+                        currentPage = 1;
+                    } else {
+                        currentPage = tempMax / 10;
+                    }
+
+
+                if (sortedFlights.size() <= 10) {
+                        nPages = 1.0;
+                    } else {
+                        nPages = sortedFlights.size()/10.0;
+
+                        if (sortedFlights.size() % 10 != 0) {
+                            nPages += 1.0;
+                        }
+
+                        nPages = Math.ceil(nPages);
+                    }
+
+                    data = sortedFlights;
+
+                    FlightsData flightsData = new FlightsData(currentPage, data, nPages);
+                    return flightsData;
+                // }
+
+                // throw new FlightCheckerError(response.toString());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

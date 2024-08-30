@@ -2,6 +2,7 @@ package com.javier.flightchecker.controllers;
 
 import com.javier.flightchecker.functions.FlightCheckerFunctions;
 import com.javier.flightchecker.models.Filters;
+import com.javier.flightchecker.models.FlightsData;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,7 +16,7 @@ public class FlightCheckerController {
     private final FlightCheckerFunctions flightCheckerFunctions = new FlightCheckerFunctions();
 
     @GetMapping("/flights")
-    public Object getFlights(
+    public FlightsData getFlights(
         @RequestParam(required = false, defaultValue = "") String departureAirportCode,
         @RequestParam(required = false, defaultValue = "") String arrivalAirportCode,
         @RequestParam(required = false, defaultValue = "") String departureDate,
