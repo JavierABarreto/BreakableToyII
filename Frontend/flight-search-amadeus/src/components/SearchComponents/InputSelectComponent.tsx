@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { IataCodes } from "../../js/mockData";
+import { getAirports } from "../../js/API";
 
 interface props {
   label: String;
@@ -11,27 +11,37 @@ export const InputSelectComponent = ({ label }: props) => {
   const [arrowUp, setArrowUp] = useState(true)
   const [dClass, setDClass] = useState("")
   const [airportName, setAirportName] = useState("")
+  const [iataCodes, setIataCodes]: any[] = useState([])
 
   const displayBtn = () => {
     setArrowUp(!arrowUp)
     dClass == "d-none" ? setDClass("d-block") : setDClass("d-none")
   }
 
+
   const setInputValue = (value: String) => {
-    const input = document.getElementById(labelTag+"Input")
+    const input: any = document.getElementById(labelTag+"Input")
 
     input.value = value;
+  }
+
+  const setNewValues = async () => {
+    setIataCodes(await getAirports({ airportName }));
   }
 
   useEffect(() => {
     if(airportName.length > 0){
       setArrowUp(true)
       setDClass("d-block")
+      setNewValues()
     } else {
       setArrowUp(false)
       setDClass("d-none")
+      setIataCodes([])
     }
   }, [airportName])
+
+
 
   return (
     <div className="row input-group mb-3" key={label+"Key"}>
@@ -48,16 +58,16 @@ export const InputSelectComponent = ({ label }: props) => {
               {
                 <>
                   {
-                    IataCodes.length > 0 ?
-                      IataCodes.map((IATA, index) => {
+                    iataCodes.length > 0 ?
+                      iataCodes.map((IATA: any, index: any) => {
                         return(
                           <a onClick={() => {
-                              setInputValue(IATA.IATACode)
+                              setInputValue(IATA.iataCode)
                               displayBtn()
                             }} key={"I"+index}>
                             <li className="list-group-item">
-                              <p className="m-0 fw-bold">{IATA.IATACode}</p>
-                              <span>{IATA.airportName}</span>
+                              <p className="m-0 fw-bold">{IATA.iataCode}</p>
+                              <span>{IATA.name.toLowerCase()}</span>
                             </li>
                           </a>
                         )

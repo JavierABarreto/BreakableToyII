@@ -24,7 +24,7 @@ public class FlightCheckerController {
         @RequestParam(required = false, defaultValue = "1") Integer numberAdults,
         @RequestParam(required = false, defaultValue = "") String currency,
         @RequestParam(required = false, defaultValue = "false") Boolean nonStops,
-        @RequestParam(required = false, defaultValue = "10") Integer max,
+        @RequestParam(required = false, defaultValue = "200") Integer max,
         @RequestParam(required = false, defaultValue = "false") Boolean sortByPrice,
         @RequestParam(required = false, defaultValue = "none") String orderPrice,
         @RequestParam(required = false, defaultValue = "false") Boolean sortByDate,

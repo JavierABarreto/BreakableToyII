@@ -1,13 +1,13 @@
 import dayjs from "dayjs"
 import { AirportInfo } from "../../js/mockData"
 
-export const Segments = ({segment, travelerPricings}: any) => {
+export const Segments = ({segment, travelerPricings, index }: any) => {
   const { aircraft, arrival, departure, id, number } = segment
   const { at: arrivalAt, iataCode: arrivalIATA } = arrival
   const { at: departureAt, iataCode: departureIATA } = departure
 
-  const arrivalDate = dayjs(arrivalAt).format("YYYY-MM-DD HH:mm")
-  const departureDate = dayjs(departureAt).format("YYYY-MM-DD HH:mm")
+  const arrivalDate = dayjs(arrivalAt).format("YYYY-MM-DD HH:mm a")
+  const departureDate = dayjs(departureAt).format("YYYY-MM-DD HH:mm a")
 
   const BOSAirport = AirportInfo[0];
   const EWRAirport = AirportInfo[1];
@@ -17,7 +17,7 @@ export const Segments = ({segment, travelerPricings}: any) => {
       <div className="row">
         <div className="col-8">
           <div className="d-flex">
-            <h5 className="col-4">Segment {id}</h5>
+            <h5 className="col-4">Segment {index + 1}</h5>
             <p className="col text-end">No. {number}</p>
           </div>
 
@@ -30,7 +30,7 @@ export const Segments = ({segment, travelerPricings}: any) => {
           <p className="my-2">Travelers fare details</p>
           <div className="fareDetailsContainer">
             {
-              travelerPricings.map((traveler: any, index: any) => {
+              travelerPricings?.map((traveler: any, index: any) => {
                 const { travelerId, fareDetailsBySegment } = traveler
                 const travelerData = fareDetailsBySegment[0]
 
@@ -46,12 +46,22 @@ export const Segments = ({segment, travelerPricings}: any) => {
 
                     <div className="px-2 py-1">
                       <div className="d-flex" key={"amenitiesTitle"}>
-                        <p className="col">Amenities</p>
-                        <p className="col text-end">hasCost</p>
+                        {
+                          travelerData?.amenities != undefined ? 
+                            <>
+                              <p className="col">Amenities</p>
+                              <p>|</p>
+                              <p className="col text-end">hasCost</p>
+                            </>
+                          :
+                            <>
+                              <p>No amenities</p>
+                            </>
+                        }
                       </div>
 
                       {
-                        travelerData.amenities.map((amenity: any, index: any) => {
+                        travelerData?.amenities?.map((amenity: any, index: any) => {
                           return (
                             <div className="d-flex" key={"amenity-"+id+"-"+index}>
                               <p className="col-4">{amenity.description}</p>

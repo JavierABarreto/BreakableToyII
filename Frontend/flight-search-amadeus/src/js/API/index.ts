@@ -1,5 +1,21 @@
 const URL = "http://localhost:8080/"
 
+export const getAirports =  async ({ name }: any) => {
+  const airportRequest = URL + "IATACodes?name="+name
+
+  try {
+    const response = await fetch(airportRequest);
+
+    if (!response.ok) {
+      throw new Error(`There's been an error: ${response.text}`);
+    }
+    
+    return await response.json();
+  } catch (error) {
+    throw new Error(`There's been an error: ${error}`);
+  }
+}
+
 export const getCurrencies = async () => {
   const currenciesRequest = URL + "currencies"
   
@@ -15,9 +31,9 @@ export const getCurrencies = async () => {
   }
 }
 
-export const getFlights = async (data: any) => {
+export const getFlights = async (params: any) => {
   let flightsRequest = URL + "flights?"
-  const {departureAirportCode, arrivalAirportCode, departureDate, returnDate, numberAdults, currency, stops, max, sortByDate, sortByPrice, orderDate, orderPrice } = data
+  const {departureAirportCode, arrivalAirportCode, departureDate, returnDate, numberAdults, currency, stops, max, sortByDate, sortByPrice, orderDate, orderPrice } = params;
   
   if(departureAirportCode != "") {
     flightsRequest += `departureAirportCode=${departureAirportCode}&`

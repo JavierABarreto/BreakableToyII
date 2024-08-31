@@ -17,16 +17,13 @@ export const Details = () => {
       <div className="row p-4" >
         <div className="col-8 m-1 overflow-scroll" style={{ height: 800 }}>
           {
-            itineraries.map((itinerary: any, index: any) => {
+            itineraries?.map((itinerary: any, index: any) => {
               const { segments } = itinerary
-
+              console.log(segments)
               return (
-                segments.map((segment: any, index: any) => (
+                segments?.map((segment: any, index: any) => (
                   <>
-                    <Segments segment={segment} travelerPricings={travelerPricings} />
-                    <Segments segment={segment} travelerPricings={travelerPricings} />
-                    <Segments segment={segment} travelerPricings={travelerPricings} />
-                    <Segments segment={segment} travelerPricings={travelerPricings} />
+                    <Segments segment={segment} travelerPricings={travelerPricings} index={index} />
                   </>
                 ))
               )
@@ -76,7 +73,7 @@ export const Details = () => {
 
             <div className="overflow-scroll" style={{ height: 200 }}>
               {
-                travelerPricings.map((traveler: any, index: any) => (
+                travelerPricings?.map((traveler: any, index: any) => (
                   <div className="d-flex">
                     <p className="col-4">{`Traveler ${index+1}`}</p>
                     <p className="col text-end">{priceString(currency, traveler.price.total)}</p>
