@@ -1,8 +1,10 @@
 package com.javier.flightchecker.models;
 
+import java.util.List;
+
 public record FlightsData(
     Integer currentPage,
-    Object flights,
+    List<Object> flights,
     Double nPages
 ) {
 }

@@ -54,7 +54,7 @@ public class FlightCheckerService {
 
 
     public FlightsData getFlights (Filters filters, String token) {
-        Object data = List.of();
+        List<Object> data = List.of();
 
         String departureAirportCode = filters.departureAirportCode();
         String arrivalAirportCode = filters.arrivalAirportCode();

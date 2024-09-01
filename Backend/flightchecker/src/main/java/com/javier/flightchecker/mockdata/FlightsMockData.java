@@ -1,9 +1,5 @@
 package com.javier.flightchecker.mockdata;
 
-import org.apache.tomcat.util.json.JSONParser;
-
-import java.util.List;
-
 public class FlightsMockData {
     public String getAirlineData () {
         String jsonData= "{\"meta\": {\"count\": 1,\"links\": {\"self\":\"https://test.api.amadeus.com/v1/reference-data/airlines?airlineCodes=BA\"}},\"data\": [{\"type\": \"airline\",\"iataCode\": \"BA\",\"icaoCode\": \"BAW\",\"businessName\": \"BRITISH AIRWAYS\",\"commonName\": \"BRITISH A/W\"}]}";

@@ -19,7 +19,7 @@ export const Details = () => {
           {
             itineraries?.map((itinerary: any, index: any) => {
               const { segments } = itinerary
-              console.log(segments)
+              
               return (
                 segments?.map((segment: any, index: any) => (
                   <>
