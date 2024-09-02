@@ -27,7 +27,7 @@ public class FlightCheckerFunctions {
 
     public FlightsData getFlights (Filters filters) {
         try {
-            // TokenIsExpired();
+             TokenIsExpired();
 
             return flight.getFlights(filters, token.getToken());
         } catch (Exception e) {

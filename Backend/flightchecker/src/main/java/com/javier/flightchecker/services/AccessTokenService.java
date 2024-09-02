@@ -10,8 +10,8 @@ import java.net.http.HttpResponse;
 
 public class AccessTokenService {
     public String getAccessToken() throws Exception {
-        String clientId = "PlU5zrV8FblRIkZMF6B7tjZSo6rtk0qo"; // PlU5zrV8FblRIkZMF6B7tjZSo6rtk0qo
-        String clientSecret = "cUcm5KMeKKnNcw1C"; // cUcm5KMeKKnNcw1C
+        String clientId = "secret"; // Replace with the given clientId token
+        String clientSecret = "secret"; // Replace with the given clientSecret token
 
         try {
             String accessToken = "";
