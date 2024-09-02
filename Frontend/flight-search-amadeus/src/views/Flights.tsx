@@ -1,4 +1,4 @@
-import { Link, useLoaderData } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { FlightCard } from "../components/FlightCards/FlightCard"
 import { RoundFlightCard } from "../components/FlightCards/RoundFlightCard"
 import useSearchParams from "../Hooks/useSearchParams"
@@ -100,7 +100,7 @@ export const Flights = () => {
             <>
               {
                 flights?.map((flight: any) => {
-                  const { id, oneWay } = flight
+                  const { id } = flight
                   
                   return (
                     returnDate == "" ?

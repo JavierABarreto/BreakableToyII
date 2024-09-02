@@ -13,9 +13,9 @@ export const FlightCard = ({ data }: any) => {
   const { price, travelerPricings, itineraries } = data
   const { currency, total } = price
   const { segments } = itineraries[0]
+
   const [airportInfo1, setAirportInfo1]: any = useState({})
   const [airportInfo2, setAirportInfo2]: any = useState({})
-
   const [airlineData, setAirlineData]: any = useState({})
 
   const departureDate = dayjs(segments[0].departure.at).format("YYYY-MM-DD HH:mm")

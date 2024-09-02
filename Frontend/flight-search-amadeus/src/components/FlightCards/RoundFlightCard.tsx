@@ -3,8 +3,8 @@ import useDetail from "../../Hooks/useDetail";
 import dayjs from "dayjs";
 import { priceString } from "../../js/price";
 import moment from "moment";
-import { getAirportData } from "../../js/API";
-import { useState } from "react";
+import { getAirlineData, getAirportData } from "../../js/API";
+import { useEffect, useState } from "react";
 
 export const RoundFlightCard = ({ data }: any) => {
   const navigate = useNavigate()
@@ -26,15 +26,17 @@ export const RoundFlightCard = ({ data }: any) => {
 
   const [airportInfo1, setAirportInfo1]: any = useState({})
   const [airportInfo2, setAirportInfo2]: any = useState({})
-  
+  const [airlineData, setAirlineData]: any = useState({})
+
   const setFlightData = () => {
     setFlight(data)
     navigate("/flights/details")
   }
   
-  const getAirportsData = async () => {
+  const getData = async () => {
     setAirportInfo1(await getAirportData(info1?.segments[0].departure.iataCode))
     setAirportInfo2(await getAirportData(info2?.segments[info2?.segments.length-1].arrival.iataCode))
+    setAirlineData(await getAirlineData(info1.segments[0].departure.iataCode))
   }
 
 
@@ -58,6 +60,10 @@ export const RoundFlightCard = ({ data }: any) => {
     return `${hours}h ${mins < 10 ? `0${mins}` : mins }m`
   }
 
+  useEffect(() => {
+    getData()
+  }, [data])
+
   return (
     <a onClick={() => setFlightData()}>
       <div className="container-md my-4">
@@ -77,34 +83,52 @@ export const RoundFlightCard = ({ data }: any) => {
                   </div>
                 </div>
               </div>
+
+              <div className="col-9">
+                <div className="row h-100">
+                  <div className="col-7 d-flex align-items-end mt-5">
+                    <span>{airlineData?.businessName != undefined ? airlineData?.businessName : "Airline"} ({airlineData?.businessName != undefined ? airlineData?.iataCode : "XX"})</span>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div className="row mt-2 p-3">
               <div className="col-9">
-                  <div className="row">
-                    <span>{departureDate2} - {arriveDate2}</span>
+                <div className="row">
+                  <span>{departureDate2} - {arriveDate2}</span>
+                </div>
+                <div className="row">
+                  <div className="col-7">
+                    <span>{`${airportInfo2[0]?.address?.cityName} (${airportInfo2[0]?.address?.cityCode}) - ${airportInfo1[0]?.address?.cityName} (${airportInfo1[0]?.address?.cityCode})`}</span>
                   </div>
-                  <div className="row">
-                    <div className="col-7">
-                      <span>{`${airportInfo2[0]?.address?.cityName} (${airportInfo2[0]?.address?.cityCode}) - ${airportInfo1[0]?.address?.cityName} (${airportInfo1[0]?.address?.cityCode})`}</span>
-                    </div>
-                    <div className="col-5">
-                      <span>{time(info2?.segments)} ({nStops2 == 0 ? "Nonstops" : `${nStops2} Stops`})</span>
-                    </div>
+                  <div className="col-5">
+                    <span>{time(info2?.segments)} ({nStops2 == 0 ? "Nonstops" : `${nStops2} Stops`})</span>
                   </div>
                 </div>
+              </div>
+
+              <div className="col-9">
+                <div className="row h-100">
+                  <div className="col-7 d-flex align-items-end mt-5">
+                    <span>{airlineData?.businessName != undefined ? airlineData?.businessName : "Airline"} ({airlineData?.businessName != undefined ? airlineData?.iataCode : "XX"})</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div className="col-2 border border-3 p-3">
-            <div className="row text-end">
-              <span>{priceString(currency, total)}</span>
-              <span>total</span>
-            </div>
+          <div className="col border border-3 p-3 d-flex align-items-center">
+            <div>
+              <div className="row text-end">
+                <span>{priceString(currency, total)}</span>
+                <span>total</span>
+              </div>
 
-            <div className="row text-end mt-2">
-              <span>{priceString(currency, (total / travelerPricings.length))}</span>
-              <span>per traveler</span>
+              <div className="row text-end mt-2">
+                <span>{priceString(currency, (total / travelerPricings.length))}</span>
+                <span>per traveler</span>
+              </div>
             </div>
           </div>
         </div>
