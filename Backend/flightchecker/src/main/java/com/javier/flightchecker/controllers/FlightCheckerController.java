@@ -40,8 +40,8 @@ public class FlightCheckerController {
         return flightCheckerFunctions.getAirlineData(IATACode);
     }
 
-    @GetMapping("/IATACodes")
+    @GetMapping("/airportData")
     public Object getIATACodes(@RequestParam(required = false, defaultValue = "") String name) {
-        return flightCheckerFunctions.IATACodes(name);
+        return flightCheckerFunctions.airportData(name);
     }
 }

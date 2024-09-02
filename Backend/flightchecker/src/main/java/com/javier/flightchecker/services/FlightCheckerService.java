@@ -79,9 +79,9 @@ public class FlightCheckerService {
                              "&currencyCode="+ currency +
                              "&max="+max;
 
-                // if (!returnDate.isBlank()) {
-                //     URL = URL + "&returnDate=" + returnDate;
-                // }
+                 if (!returnDate.isBlank()) {
+                     URL = URL + "&returnDate=" + returnDate;
+                 }
 
                 // URI URIRequest = new URI(baseURL2 + URL);
 
@@ -98,11 +98,11 @@ public class FlightCheckerService {
 
                 // if (response.statusCode() == 200) {
                     // LinkedHashMap meta = (LinkedHashMap) new JSONParser(response.body()).object().get("meta");
-                    LinkedHashMap meta = (LinkedHashMap) new JSONParser(mockData.getMockFlights()).object().get("meta");
+                    LinkedHashMap meta = (LinkedHashMap) new JSONParser(mockData.getMockFlights()).object().get("meta"); // COMMENT WHEN NO LONGER NEEDED
                     Integer count = Integer.parseInt(meta.get("count").toString());
 
                     // List<Object> flights = (List<Object>) new JSONParser(response.body()).object().get("data");
-                    List<Object> flights = (List<Object>) new JSONParser(mockData.getMockFlights()).object().get("data");
+                    List<Object> flights = (List<Object>) new JSONParser(mockData.getMockFlights()).object().get("data"); // COMMENT WHEN NO LONGER NEEDED
 
                     List<Object> sortedFlights = sorter(flights, sortByPrice, orderPrice, sortByDate, orderDate);
 
@@ -143,9 +143,9 @@ public class FlightCheckerService {
     }
 
 
-    public Object getIATACodes (String token, String name) {
+    public Object getAirportData (String token, String name) {
         Object data = List.of();
-        Integer limit = 25;
+        Integer limit = 10;
         Integer offset = 0;
 
         try {
@@ -168,7 +168,8 @@ public class FlightCheckerService {
 //
 //            if (response.statusCode() == 200) {
 //                JSONParser res = new JSONParser(response.body());
-                data = new JSONParser(mockData.getAirportData()).object().get("data");
+//                data = new JSONParser(response.body()).object().get("data");
+                data = new JSONParser(mockData.getAirportData()).object().get("data"); // COMMENT WHEN NO LONGER NEEDED
 
                 return data;
 //            }

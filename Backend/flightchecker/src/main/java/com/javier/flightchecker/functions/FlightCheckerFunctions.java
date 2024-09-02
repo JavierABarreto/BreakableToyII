@@ -35,11 +35,11 @@ public class FlightCheckerFunctions {
         }
     }
 
-    public Object IATACodes (String name) {
+    public Object airportData (String name) {
         try {
             TokenIsExpired();
 
-            return flight.getIATACodes(token.getToken(), name);
+            return flight.getAirportData(token.getToken(), name);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
