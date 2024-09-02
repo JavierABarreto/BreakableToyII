@@ -4,7 +4,7 @@ import { priceString } from "../../js/price";
 import dayjs from "dayjs";
 import moment from "moment";
 import { AirportInfo } from "../../js/mockData";
-import { getAirportData } from "../../js/API";
+import { getAirlineData, getAirportData } from "../../js/API";
 import { useEffect, useState } from "react";
 
 export const FlightCard = ({ data }: any) => {
@@ -16,13 +16,16 @@ export const FlightCard = ({ data }: any) => {
   const [airportInfo1, setAirportInfo1]: any = useState({})
   const [airportInfo2, setAirportInfo2]: any = useState({})
 
+  const [airlineData, setAirlineData]: any = useState({})
+
   const departureDate = dayjs(segments[0].departure.at).format("YYYY-MM-DD HH:mm")
   const arriveDate = dayjs(segments[segments.length-1].arrival.at).format("YYYY-MM-DD HH:mm")
   const nStops = 0;
 
-  const getAirportsData = async () => {
+  const getData = async () => {
     setAirportInfo1(await getAirportData(segments[0].departure.iataCode))
     setAirportInfo2(await getAirportData(segments[segments.length-1].arrival.iataCode))
+    setAirlineData(await getAirlineData(segments[0].departure.iataCode))
   }
 
   const time = () => {
@@ -53,7 +56,7 @@ export const FlightCard = ({ data }: any) => {
   }
 
   useEffect(() => {
-    getAirportsData()
+    getData()
   }, [data])
 
   return (
@@ -88,7 +91,7 @@ export const FlightCard = ({ data }: any) => {
           <div className="col-9">
             <div className="row h-100">
               <div className="col-7 d-flex align-items-end">
-                <span>Airline</span>
+                <span>{airlineData?.businessName != undefined ? airlineData?.businessName : "Airline"} ({airlineData?.businessName != undefined ? airlineData?.iataCode : "XX"})</span>
               </div>
 
               <div className="col-5">

@@ -1,7 +1,7 @@
 import dayjs from "dayjs"
 import { AirportInfo } from "../../js/mockData"
 import { useEffect, useState } from "react"
-import { getAirportData } from "../../js/API"
+import { getAirlineData, getAirportData } from "../../js/API"
 
 export const Segments = ({segment, travelerPricings, index }: any) => {
   const { aircraft, arrival, departure, id, number } = segment
@@ -13,10 +13,12 @@ export const Segments = ({segment, travelerPricings, index }: any) => {
 
   const [airportInfo1, setAirportInfo1]: any = useState({})
   const [airportInfo2, setAirportInfo2]: any = useState({})
+  const [airlineData, setAirlineData]: any = useState({})
 
   const getAirportsData = async () => {
     setAirportInfo1(await getAirportData(departureIATA))
     setAirportInfo2(await getAirportData(arrivalIATA))
+    setAirlineData(await getAirlineData(departureIATA))
   }
 
   useEffect(() => {
@@ -34,7 +36,7 @@ export const Segments = ({segment, travelerPricings, index }: any) => {
 
           <p>{departureDate} - {arrivalDate}</p>
           <p>{`${airportInfo1[0]?.address?.cityName} (${airportInfo1[0]?.address?.cityCode}) - ${airportInfo2[0]?.address?.cityName} (${airportInfo2[0]?.address?.cityCode})`}</p>
-          <p>{`AIRLINE (XX) ${aircraft.code}`}</p>
+          <p>{`${airlineData?.businessName != undefined ? airlineData?.businessName : "Airline"} (${airlineData?.businessName != undefined ? airlineData?.iataCode : "XX"}) ${aircraft.code}`}</p>
         </div>
 
         <div className="col border overflow-scroll" style={{ height: 170 }}>

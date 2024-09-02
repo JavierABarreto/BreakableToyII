@@ -3,6 +3,8 @@ import useDetail from "../../Hooks/useDetail";
 import dayjs from "dayjs";
 import { priceString } from "../../js/price";
 import moment from "moment";
+import { getAirportData } from "../../js/API";
+import { useState } from "react";
 
 export const RoundFlightCard = ({ data }: any) => {
   const navigate = useNavigate()
@@ -21,10 +23,18 @@ export const RoundFlightCard = ({ data }: any) => {
 
   const nStops1 = 0
   const nStops2 = 0
+
+  const [airportInfo1, setAirportInfo1]: any = useState({})
+  const [airportInfo2, setAirportInfo2]: any = useState({})
   
   const setFlightData = () => {
     setFlight(data)
     navigate("/flights/details")
+  }
+  
+  const getAirportsData = async () => {
+    setAirportInfo1(await getAirportData(info1?.segments[0].departure.iataCode))
+    setAirportInfo2(await getAirportData(info2?.segments[info2?.segments.length-1].arrival.iataCode))
   }
 
 
@@ -60,7 +70,7 @@ export const RoundFlightCard = ({ data }: any) => {
                 </div>
                 <div className="row">
                   <div className="col-7">
-                    <>city</>
+                    <span>{`${airportInfo1[0]?.address?.cityName} (${airportInfo1[0]?.address?.cityCode}) - ${airportInfo2[0]?.address?.cityName} (${airportInfo2[0]?.address?.cityCode})`}</span>
                   </div>
                   <div className="col-5">
                     <span>{time(info1?.segments)} ({nStops1 == 0 ? "Nonstops" : `${nStops1} Stops`})</span>
@@ -76,7 +86,7 @@ export const RoundFlightCard = ({ data }: any) => {
                   </div>
                   <div className="row">
                     <div className="col-7">
-                      <>city</>
+                      <span>{`${airportInfo2[0]?.address?.cityName} (${airportInfo2[0]?.address?.cityCode}) - ${airportInfo1[0]?.address?.cityName} (${airportInfo1[0]?.address?.cityCode})`}</span>
                     </div>
                     <div className="col-5">
                       <span>{time(info2?.segments)} ({nStops2 == 0 ? "Nonstops" : `${nStops2} Stops`})</span>

@@ -1,6 +1,5 @@
 package com.javier.flightchecker.services;
 
-import com.javier.flightchecker.exceptions.FlightCheckerError;
 import com.javier.flightchecker.mockdata.FlightsMockData;
 import com.javier.flightchecker.models.Filters;
 import com.javier.flightchecker.models.FlightsData;
@@ -8,12 +7,10 @@ import com.javier.flightchecker.models.FlightsData;
 import org.apache.tomcat.util.json.JSONParser;
 
 import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class FlightCheckerService {
     private String baseURL1 = "https://test.api.amadeus.com/v1/";
@@ -21,32 +18,40 @@ public class FlightCheckerService {
     private FlightsMockData mockData = new FlightsMockData();
 
     public Object getAirlineData(String IATACode, String token) {
-        Object data = List.of();
+        AtomicReference<Object> data = new AtomicReference<>(List.of());
 
         try {
             String URL = "reference-data/airlines?airlineCodes=" + IATACode;
 
             URI URIRequest = new URI(baseURL1 + URL);
 
-            HttpRequest getRequest = HttpRequest.newBuilder()
-                    .uri(URIRequest)
-                    .header("Content-Type", "application/x-www-form-urlencoded")
-                    .header("Authorization", "Bearer "+token)
-                    .GET()
-                    .build();
+//            HttpRequest getRequest = HttpRequest.newBuilder()
+//                    .uri(URIRequest)
+//                    .header("Content-Type", "application/x-www-form-urlencoded")
+//                    .header("Authorization", "Bearer "+token)
+//                    .GET()
+//                    .build();
+//
+//            HttpClient httpClient = HttpClient.newHttpClient();
+//
+//            HttpResponse<String> response = httpClient.send(getRequest, HttpResponse.BodyHandlers.ofString());
+//
+//            if (response.statusCode() == 200) {
+//                JSONParser res = new JSONParser(response.body());
+//                data = res.object().get("data");
 
-            HttpClient httpClient = HttpClient.newHttpClient();
+                List<Object> airline = (List<Object>) new JSONParser(mockData.getAirlineData()).object().get("data"); // COMMENT WHEN NO LONGER NEEDED
 
-            HttpResponse<String> response = httpClient.send(getRequest, HttpResponse.BodyHandlers.ofString());
-
-            if (response.statusCode() == 200) {
-                JSONParser res = new JSONParser(response.body());
-                data = res.object().get("data");
+                airline.forEach((a) -> {
+                    LinkedHashMap airData = (LinkedHashMap) a;
+                    if (airData.get("icaoCode").toString().equals(IATACode) || airData.get("iataCode").toString().equals(IATACode))
+                        data.set(a);
+                });
 
                 return data;
-            }
+//            }
 
-            throw new FlightCheckerError(response.toString());
+//            throw new FlightCheckerError(response.toString());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

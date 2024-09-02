@@ -16,6 +16,24 @@ export const getAirportData =  async (name: string) => {
   }
 }
 
+
+export const getAirlineData =  async (code: string) => {
+  const airlineRequest = URL + "airlineData?IATACode="+code
+
+  try {
+    const response = await fetch(airlineRequest);
+
+    if (!response.ok) {
+      throw new Error(`There's been an error: ${response.text}`);
+    }
+    
+    return await response.json();
+  } catch (error) {
+    throw new Error(`There's been an error: ${error}`);
+  }
+}
+
+
 export const getCurrencies = async () => {
   const currenciesRequest = URL + "currencies"
   
