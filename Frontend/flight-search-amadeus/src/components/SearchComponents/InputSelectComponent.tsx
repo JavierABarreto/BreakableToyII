@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getAirports } from "../../js/API";
+import { getAirportData } from "../../js/API";
 
 interface props {
   label: String;
@@ -26,7 +26,7 @@ export const InputSelectComponent = ({ label }: props) => {
   }
 
   const setNewValues = async () => {
-    setIataCodes(await getAirports({ airportName }));
+    setIataCodes(await getAirportData(airportName));
   }
 
   useEffect(() => {

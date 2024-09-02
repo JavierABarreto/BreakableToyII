@@ -41,7 +41,7 @@ export const Flights = () => {
 
         break;
         
-      default:
+      case "date":
         if (orderDate == "none") {
           setOrderDate("asc")
           setBtnDateText("Descendant")
@@ -58,6 +58,9 @@ export const Flights = () => {
           params.sortByDate = false
           params.orderDate = "none"
         }
+        break;
+
+      default:
         break;
     }
 

@@ -1,7 +1,7 @@
 const URL = "http://localhost:8080/"
 
-export const getAirports =  async ({ name }: any) => {
-  const airportRequest = URL + "IATACodes?name="+name
+export const getAirportData =  async (name: string) => {
+  const airportRequest = URL + "airportData?name="+name
 
   try {
     const response = await fetch(airportRequest);

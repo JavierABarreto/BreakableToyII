@@ -1,5 +1,7 @@
 import dayjs from "dayjs"
 import { AirportInfo } from "../../js/mockData"
+import { useEffect, useState } from "react"
+import { getAirportData } from "../../js/API"
 
 export const Segments = ({segment, travelerPricings, index }: any) => {
   const { aircraft, arrival, departure, id, number } = segment
@@ -9,8 +11,17 @@ export const Segments = ({segment, travelerPricings, index }: any) => {
   const arrivalDate = dayjs(arrivalAt).format("YYYY-MM-DD HH:mm a")
   const departureDate = dayjs(departureAt).format("YYYY-MM-DD HH:mm a")
 
-  const BOSAirport = AirportInfo[0];
-  const EWRAirport = AirportInfo[1];
+  const [airportInfo1, setAirportInfo1]: any = useState({})
+  const [airportInfo2, setAirportInfo2]: any = useState({})
+
+  const getAirportsData = async () => {
+    setAirportInfo1(await getAirportData(departureIATA))
+    setAirportInfo2(await getAirportData(arrivalIATA))
+  }
+
+  useEffect(() => {
+    getAirportsData();
+  }, [])
 
   return (
     <div className="container-sm border my-3 p-3" key={"segment-"+id}>
@@ -22,7 +33,7 @@ export const Segments = ({segment, travelerPricings, index }: any) => {
           </div>
 
           <p>{departureDate} - {arrivalDate}</p>
-          <p>{`${BOSAirport.address.cityName} (${BOSAirport.address.cityCode}) - ${EWRAirport.address.cityName} (${EWRAirport.address.cityCode})`}</p>
+          <p>{`${airportInfo1[0]?.address?.cityName} (${airportInfo1[0]?.address?.cityCode}) - ${airportInfo2[0]?.address?.cityName} (${airportInfo2[0]?.address?.cityCode})`}</p>
           <p>{`AIRLINE (XX) ${aircraft.code}`}</p>
         </div>
 

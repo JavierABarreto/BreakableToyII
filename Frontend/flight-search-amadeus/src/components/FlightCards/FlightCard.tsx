@@ -4,6 +4,8 @@ import { priceString } from "../../js/price";
 import dayjs from "dayjs";
 import moment from "moment";
 import { AirportInfo } from "../../js/mockData";
+import { getAirportData } from "../../js/API";
+import { useEffect, useState } from "react";
 
 export const FlightCard = ({ data }: any) => {
   const navigate = useNavigate()
@@ -11,13 +13,17 @@ export const FlightCard = ({ data }: any) => {
   const { price, travelerPricings, itineraries } = data
   const { currency, total } = price
   const { segments } = itineraries[0]
+  const [airportInfo1, setAirportInfo1]: any = useState({})
+  const [airportInfo2, setAirportInfo2]: any = useState({})
 
   const departureDate = dayjs(segments[0].departure.at).format("YYYY-MM-DD HH:mm")
   const arriveDate = dayjs(segments[segments.length-1].arrival.at).format("YYYY-MM-DD HH:mm")
   const nStops = 0;
 
-  const BOSAirport = AirportInfo[0];
-  const EWRAirport = AirportInfo[1];
+  const getAirportsData = async () => {
+    setAirportInfo1(await getAirportData(segments[0].departure.iataCode))
+    setAirportInfo2(await getAirportData(segments[segments.length-1].arrival.iataCode))
+  }
 
   const time = () => {
     let time = 0
@@ -46,6 +52,9 @@ export const FlightCard = ({ data }: any) => {
     navigate("/flights/details")
   }
 
+  useEffect(() => {
+    getAirportsData()
+  }, [data])
 
   return (
     <a onClick={() => setFlightData()}>
@@ -57,7 +66,7 @@ export const FlightCard = ({ data }: any) => {
             </div>
             <div className="row">
               <div className="col-7">
-                <span>{`${BOSAirport.address.cityName} (${BOSAirport.address.cityCode}) to ${EWRAirport.address.cityName} (${EWRAirport.address.cityCode})`}</span>
+                <span>{`${airportInfo1[0]?.address?.cityName} (${airportInfo1[0]?.address?.cityCode}) to ${airportInfo2[0]?.address?.cityName} (${airportInfo2[0]?.address?.cityCode})`}</span>
               </div>
               <div className="col-5">
                 <span>{timeString} ({nStops == 0 ? "Nonstops" : `${nStops} Stops`})</span>

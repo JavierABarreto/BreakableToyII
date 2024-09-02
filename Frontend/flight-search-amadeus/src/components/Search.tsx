@@ -6,6 +6,7 @@ import { InputSelectComponent } from "./SearchComponents/InputSelectComponent"
 import { InputTextComponent } from "./SearchComponents/InputTextComponent"
 import { currenciesMock } from "../js/mockData"
 import useSearchParams from "../Hooks/useSearchParams"
+import moment from "moment"
 
 export const Search = () => {
   const navigate = useNavigate()
@@ -24,7 +25,6 @@ export const Search = () => {
     const currency = document.getElementById("selectCurrency").value
     const nonStop = document.getElementById("nonStop").checked
 
-
     const params = {
       departureAirportCode: dCode,
       arrivalAirportCode: rCode,
@@ -39,9 +39,19 @@ export const Search = () => {
       sortByDate:false,
       orderDate: ""
     }
-
-    setParams(params)
-    navigate('flights')
+    
+    if (rDate != "") {
+  
+      if (moment(rDate).unix() < moment(dDate).unix()) {
+        alert("Return date cannot be less than departure date");
+      } else {
+        setParams(params)
+        navigate('flights')
+      }
+    } else {
+      setParams(params)
+      navigate('flights')
+    }
   }
 
   return (
