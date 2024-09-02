@@ -10,11 +10,14 @@ import java.net.http.HttpResponse;
 
 public class AccessTokenService {
     public String getAccessToken() throws Exception {
+        String clientId = "secret"; // Replace with the given clientId token
+        String clientSecret = "secret"; // Replace with the given clientSecret token
+
         try {
             String accessToken = "";
             URI uri = new URI("https://test.api.amadeus.com/v1/security/oauth2/token");
 
-            String requestBody = "grant_type=client_credentials&client_id=PlU5zrV8FblRIkZMF6B7tjZSo6rtk0qo&client_secret=cUcm5KMeKKnNcw1C";
+            String requestBody = "grant_type=client_credentials&client_id="+clientId+"&client_secret="+clientSecret;
 
             HttpRequest postRequest = HttpRequest.newBuilder()
                     .uri(uri)

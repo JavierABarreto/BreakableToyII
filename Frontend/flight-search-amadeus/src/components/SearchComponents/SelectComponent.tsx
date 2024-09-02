@@ -11,10 +11,10 @@ export const SelectComponent = ({ label, options}: props) => {
     <div className="row mb-3">
       <div className="col-1"/>
 
-      <label htmlFor="colFormLabel" className="col-4 col-form-label text-end">{label}</label>
+      <label htmlFor="selectCurrency" className="col-4 col-form-label text-end">{label}</label>
 
       <div className="col-6">
-        <select className="form-select">
+        <select className="form-select" id="selectCurrency">
           {
             options?.map((option, index) => {
               return(

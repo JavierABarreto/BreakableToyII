@@ -2,8 +2,12 @@ import { Link } from "react-router-dom"
 import { Segments } from "../components/Details/Segments"
 import useDetail from "../Hooks/useDetail"
 import { priceString } from "../js/price";
+import useSearchParams from "../Hooks/useSearchParams";
 
 export const Details = () => {
+  const { params }: any = useSearchParams();
+  const { returnDate } = params
+
   const { flight }: any = useDetail();
   const { itineraries, price, travelerPricings } = flight
   const { base, currency, fees, total } = price
@@ -15,22 +19,40 @@ export const Details = () => {
       <Link className="btn btn-dark my-4" to={"/flights"}>{"< Go Back"}</Link>
 
       <div className="row p-4" >
-        <div className="col-8 m-1 overflow-scroll" style={{ height: 800 }}>
+        <div className="col-8">
           {
-            itineraries.map((itinerary: any, index: any) => {
-              const { segments } = itinerary
+            returnDate != "" ?
+              <h3>Departure flight</h3>
+            :
+              <></>
+          }
+          <div className="m-1 overflow-scroll" style={{ height: 400 }}>
+            {
+              itineraries[0]?.segments?.map((segment: any, index: any) => (
+                <>
+                  <Segments segment={segment} travelerPricings={travelerPricings} index={index} />
+                </>
+              ))
+            }
+          </div>
 
-              return (
-                segments.map((segment: any, index: any) => (
-                  <>
-                    <Segments segment={segment} travelerPricings={travelerPricings} />
-                    <Segments segment={segment} travelerPricings={travelerPricings} />
-                    <Segments segment={segment} travelerPricings={travelerPricings} />
-                    <Segments segment={segment} travelerPricings={travelerPricings} />
-                  </>
-                ))
-              )
-            })
+          {
+            returnDate != "" ?
+            <>
+              <h3>Return flight</h3>
+
+              <div className="m-1 overflow-scroll" style={{ height: 400 }}>
+                {
+                  itineraries[1]?.segments?.map((segment: any, index: any) => (
+                    <>
+                      <Segments segment={segment} travelerPricings={travelerPricings} index={index} />
+                    </>
+                  ))
+                }
+              </div>
+            </>
+            :
+              <></>
           }
         </div>
 
@@ -76,7 +98,7 @@ export const Details = () => {
 
             <div className="overflow-scroll" style={{ height: 200 }}>
               {
-                travelerPricings.map((traveler: any, index: any) => (
+                travelerPricings?.map((traveler: any, index: any) => (
                   <div className="d-flex">
                     <p className="col-4">{`Traveler ${index+1}`}</p>
                     <p className="col text-end">{priceString(currency, traveler.price.total)}</p>

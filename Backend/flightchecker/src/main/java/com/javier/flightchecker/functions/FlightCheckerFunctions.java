@@ -1,11 +1,13 @@
 package com.javier.flightchecker.functions;
 
 import com.javier.flightchecker.models.Filters;
+import com.javier.flightchecker.models.FlightsData;
 import com.javier.flightchecker.repository.AccessTokenRepository;
 import com.javier.flightchecker.services.AccessTokenService;
 import com.javier.flightchecker.services.FlightCheckerService;
 
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class FlightCheckerFunctions {
@@ -23,9 +25,9 @@ public class FlightCheckerFunctions {
         }
     }
 
-    public Object getFlights (Filters filters) {
+    public FlightsData getFlights (Filters filters) {
         try {
-            TokenIsExpired();
+             TokenIsExpired();
 
             return flight.getFlights(filters, token.getToken());
         } catch (Exception e) {
@@ -33,11 +35,11 @@ public class FlightCheckerFunctions {
         }
     }
 
-    public Object IATACodes (String name) {
+    public Object airportData (String name) {
         try {
             TokenIsExpired();
 
-            return flight.getIATACodes(token.getToken(), name);
+            return flight.getAirportData(token.getToken(), name);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -45,7 +47,7 @@ public class FlightCheckerFunctions {
 
     private void TokenIsExpired () {
         try {
-            if(token.isExpired()) {
+            if (token.isExpired()) {
                 token.setToken(api.getAccessToken());
                 token.setTokenExpTime((new Date().getTime() / 1000) + 1799);
             }
