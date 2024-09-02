@@ -3,7 +3,6 @@ import useDetail from "../../Hooks/useDetail";
 import { priceString } from "../../js/price";
 import dayjs from "dayjs";
 import moment from "moment";
-import { AirportInfo } from "../../js/mockData";
 import { getAirlineData, getAirportData } from "../../js/API";
 import { useEffect, useState } from "react";
 

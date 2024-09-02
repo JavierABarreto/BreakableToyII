@@ -1,5 +1,4 @@
 import dayjs from "dayjs"
-import { AirportInfo } from "../../js/mockData"
 import { useEffect, useState } from "react"
 import { getAirlineData, getAirportData } from "../../js/API"
 

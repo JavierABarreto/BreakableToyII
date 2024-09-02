@@ -17,22 +17,22 @@ export const Search = () => {
   currencies == undefined ? currenciesMock : currencies
 
   const sendParams = () => {
-    const dCode = document.getElementById("dLabelAirportInput").value
-    const rCode = document.getElementById("rLabelAirportInput").value
-    const nAdults = document.getElementById("noAdults").value
-    const dDate = document.getElementById("dDateInput").value
-    const rDate = document.getElementById("rDateInput").value
-    const currency = document.getElementById("selectCurrency").value
-    const nonStop = document.getElementById("nonStop").checked
+    const dCode: any = document.getElementById("dLabelAirportInput")
+    const rCode: any = document.getElementById("rLabelAirportInput")
+    const nAdults: any = document.getElementById("noAdults")
+    const dDate: any = document.getElementById("dDateInput")
+    const rDate: any = document.getElementById("rDateInput")
+    const currency: any = document.getElementById("selectCurrency")
+    const nonStop: any = document.getElementById("nonStop")
 
     const params = {
-      departureAirportCode: dCode,
-      arrivalAirportCode: rCode,
-      departureDate: dDate,
-      returnDate: rDate,
-      numberAdults: nAdults,
-      currency: currency,
-      stops: nonStop,
+      departureAirportCode: dCode.value,
+      arrivalAirportCode: rCode.value,
+      departureDate: dDate.value,
+      returnDate: rDate.value,
+      numberAdults: nAdults.value,
+      currency: currency.value,
+      stops: nonStop.checked,
       max: 20,
       sortByPrice: false,
       orderPrice: "",
