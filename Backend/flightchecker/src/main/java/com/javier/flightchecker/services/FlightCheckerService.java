@@ -1,10 +1,14 @@
 package com.javier.flightchecker.services;
 
+import com.javier.flightchecker.exceptions.FlightCheckerError;
 import com.javier.flightchecker.mockdata.FlightsMockData;
 import com.javier.flightchecker.models.Filters;
 import com.javier.flightchecker.models.FlightsData;
 
 import org.apache.tomcat.util.json.JSONParser;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
 import java.net.URI;
 import java.time.LocalDateTime;
@@ -25,22 +29,19 @@ public class FlightCheckerService {
 
             URI URIRequest = new URI(baseURL1 + URL);
 
-//            HttpRequest getRequest = HttpRequest.newBuilder()
-//                    .uri(URIRequest)
-//                    .header("Content-Type", "application/x-www-form-urlencoded")
-//                    .header("Authorization", "Bearer "+token)
-//                    .GET()
-//                    .build();
-//
-//            HttpClient httpClient = HttpClient.newHttpClient();
-//
-//            HttpResponse<String> response = httpClient.send(getRequest, HttpResponse.BodyHandlers.ofString());
-//
-//            if (response.statusCode() == 200) {
-//                JSONParser res = new JSONParser(response.body());
-//                data = res.object().get("data");
+           HttpRequest getRequest = HttpRequest.newBuilder()
+                   .uri(URIRequest)
+                   .header("Content-Type", "application/x-www-form-urlencoded")
+                   .header("Authorization", "Bearer "+token)
+                   .GET()
+                   .build();
 
-                List<Object> airline = (List<Object>) new JSONParser(mockData.getAirlineData()).object().get("data"); // COMMENT WHEN NO LONGER NEEDED
+           HttpClient httpClient = HttpClient.newHttpClient();
+
+           HttpResponse<String> response = httpClient.send(getRequest, HttpResponse.BodyHandlers.ofString());
+
+           if (response.statusCode() == 200) {
+                List<Object> airline = (List<Object>) new JSONParser(response.body()).object().get("data");
 
                 airline.forEach((a) -> {
                     LinkedHashMap airData = (LinkedHashMap) a;
@@ -49,9 +50,9 @@ public class FlightCheckerService {
                 });
 
                 return data;
-//            }
+           }
 
-//            throw new FlightCheckerError(response.toString());
+           throw new FlightCheckerError(response.toString());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -75,73 +76,71 @@ public class FlightCheckerService {
         String orderDate = filters.orderDate();
 
         try {
-                String URL = "shopping/flight-offers?" +
-                             "originLocationCode="+ departureAirportCode +
-                             "&destinationLocationCode="+ arrivalAirportCode +
-                             "&departureDate="+ departureDate +
-                             "&adults="+ numberAdults +
-                             "&nonStop="+ stops +
-                             "&currencyCode="+ currency +
-                             "&max="+max;
+            String URL = "shopping/flight-offers?" +
+                            "originLocationCode="+ departureAirportCode +
+                            "&destinationLocationCode="+ arrivalAirportCode +
+                            "&departureDate="+ departureDate +
+                            "&adults="+ numberAdults +
+                            "&nonStop="+ stops +
+                            "&currencyCode="+ currency +
+                            "&max="+max;
 
-                 if (!returnDate.isBlank()) {
-                     URL = URL + "&returnDate=" + returnDate;
-                 }
+                if (!returnDate.isBlank()) {
+                    URL = URL + "&returnDate=" + returnDate;
+                }
 
-                // URI URIRequest = new URI(baseURL2 + URL);
+            URI URIRequest = new URI(baseURL2 + URL);
 
-                // HttpRequest getRequest = HttpRequest.newBuilder()
-                //         .uri(URIRequest)
-                //         .header("Content-Type", "application/x-www-form-urlencoded")
-                //         .header("Authorization", "Bearer "+token)
-                //         .GET()
-                //         .build();
+            HttpRequest getRequest = HttpRequest.newBuilder()
+                    .uri(URIRequest)
+                    .header("Content-Type", "application/x-www-form-urlencoded")
+                    .header("Authorization", "Bearer "+token)
+                    .GET()
+                    .build();
 
-                // HttpClient httpClient = HttpClient.newHttpClient();
+            HttpClient httpClient = HttpClient.newHttpClient();
 
-                // HttpResponse<String> response = httpClient.send(getRequest, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> response = httpClient.send(getRequest, HttpResponse.BodyHandlers.ofString());
 
-                // if (response.statusCode() == 200) {
-                    // LinkedHashMap meta = (LinkedHashMap) new JSONParser(response.body()).object().get("meta");
-                    LinkedHashMap meta = (LinkedHashMap) new JSONParser(mockData.getMockFlights()).object().get("meta"); // COMMENT WHEN NO LONGER NEEDED
-                    Integer count = Integer.parseInt(meta.get("count").toString());
+            if (response.statusCode() == 200) {
+                LinkedHashMap meta = (LinkedHashMap) new JSONParser(response.body()).object().get("meta");
+                Integer count = Integer.parseInt(meta.get("count").toString());
 
-                    // List<Object> flights = (List<Object>) new JSONParser(response.body()).object().get("data");
-                    List<Object> flights = (List<Object>) new JSONParser(mockData.getMockFlights()).object().get("data"); // COMMENT WHEN NO LONGER NEEDED
+                List<Object> flights = (List<Object>) new JSONParser(response.body()).object().get("data");
 
-                    List<Object> sortedFlights = sorter(flights, sortByPrice, orderPrice, sortByDate, orderDate);
+                List<Object> sortedFlights = sorter(flights, sortByPrice, orderPrice, sortByDate, orderDate);
 
-                    Integer tempMax = max;
-                    Integer min = max - 9;
-                    Double nPages = 0.0;
-                    Integer currentPage = 0;
+                Integer tempMax = max;
+                Integer min = max - 9;
+                Double nPages = 0.0;
+                Integer currentPage = 0;
 
-                    if (sortedFlights.size() <= 10) {
-                        currentPage = 1;
-                    } else {
-                        currentPage = tempMax / 10;
+                if (sortedFlights.size() <= 10) {
+                    currentPage = 1;
+                } else {
+                    currentPage = tempMax / 10;
+                }
+
+
+                if (sortedFlights.size() <= 10) {
+                    nPages = 1.0;
+                } else {
+                    nPages = sortedFlights.size()/10.0;
+
+                    if (sortedFlights.size() % 10 != 0) {
+                        nPages += 1.0;
                     }
 
+                    nPages = Math.ceil(nPages);
+                }
 
-                    if (sortedFlights.size() <= 10) {
-                        nPages = 1.0;
-                    } else {
-                        nPages = sortedFlights.size()/10.0;
+                data = sortedFlights;
 
-                        if (sortedFlights.size() % 10 != 0) {
-                            nPages += 1.0;
-                        }
+                FlightsData flightsData = new FlightsData(currentPage, data, nPages);
+                return flightsData;
+            }
 
-                        nPages = Math.ceil(nPages);
-                    }
-
-                    data = sortedFlights;
-
-                    FlightsData flightsData = new FlightsData(currentPage, data, nPages);
-                    return flightsData;
-                // }
-
-                // throw new FlightCheckerError(response.toString());
+            throw new FlightCheckerError(response.toString());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -158,28 +157,26 @@ public class FlightCheckerService {
                          "&page%5Blimit%5D="+ limit +"&page%5Boffset%5D="+ offset +
                          "&sort=analytics.travelers.score&view=FULL";
 
-//            URI URIRequest = new URI(baseURL1 + URL);
-//
-//            HttpRequest getRequest = HttpRequest.newBuilder()
-//                    .uri(URIRequest)
-//                    .header("Content-Type", "application/x-www-form-urlencoded")
-//                    .header("Authorization", "Bearer "+token)
-//                    .GET()
-//                    .build();
-//
-//            HttpClient httpClient = HttpClient.newHttpClient();
-//
-//            HttpResponse<String> response = httpClient.send(getRequest, HttpResponse.BodyHandlers.ofString());
-//
-//            if (response.statusCode() == 200) {
-//                JSONParser res = new JSONParser(response.body());
-//                data = new JSONParser(response.body()).object().get("data");
-                data = new JSONParser(mockData.getAirportData()).object().get("data"); // COMMENT WHEN NO LONGER NEEDED
+           URI URIRequest = new URI(baseURL1 + URL);
+
+           HttpRequest getRequest = HttpRequest.newBuilder()
+                   .uri(URIRequest)
+                   .header("Content-Type", "application/x-www-form-urlencoded")
+                   .header("Authorization", "Bearer "+token)
+                   .GET()
+                   .build();
+
+           HttpClient httpClient = HttpClient.newHttpClient();
+
+           HttpResponse<String> response = httpClient.send(getRequest, HttpResponse.BodyHandlers.ofString());
+
+           if (response.statusCode() == 200) {
+                data = new JSONParser(response.body()).object().get("data");
 
                 return data;
-//            }
+           }
 
-//            throw new FlightCheckerError(response.toString());
+           throw new FlightCheckerError(response.toString());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
