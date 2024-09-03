@@ -40,9 +40,9 @@ export const Search = () => {
       orderDate: ""
     }
     
-    if (rDate != "") {
+    if (rDate?.value != "") {
   
-      if (moment(rDate).unix() < moment(dDate).unix()) {
+      if (moment(rDate?.value).unix() < moment(dDate?.value).unix()) {
         alert("Return date cannot be less than departure date");
       } else {
         setParams(params)
